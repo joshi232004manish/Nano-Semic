@@ -15,12 +15,14 @@ const why = () => {
             <h1 className="text-white text-5xl -mt-10 fond-bold hover:italic">
             A different approach using a new method of
              manufacturing world of Sensor</h1>
+             
 
         </div>
         </div>
 
 
         {/* section */}
+        
         <section class="bg-black  -mt-10">
     <div class="max-w-[1280px] mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
