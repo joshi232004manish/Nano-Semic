@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { SwiperSlide, Swiper } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+//import { SwiperSlide, Swiper } from "swiper/react";
+//import { Navigation } from "swiper/modules";
+//import "swiper/css";
+//import "swiper/css/navigation";
 import axios from "axios";
 
 
@@ -19,7 +19,7 @@ const [listing, setListing] = useState(null);
     const fetchListing = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/product/get/682be6f9940ad43e4e8ad852"
+          "http://localhost:5000/api/product/get/682be6f9940ad43e4e8ad852"
         );
         setListing(response.data); // ✅ Axios response data
         console.log(response.data);

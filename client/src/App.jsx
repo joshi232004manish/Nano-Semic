@@ -17,8 +17,8 @@ import Services from './components/Services'
 import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
-import ProductPage from './components/product_page'
-
+import Dashboard from './components/Dashboard'
+import ProductPage from './components/Product_page'
 function App() {
   
   return (
@@ -33,6 +33,7 @@ function App() {
     <Route path ="/Contact" element = {<Contact/>}/>
     <Route path = "/signup" element = {<Signup/>}/>
     <Route path="/signin"  element = {<Signin/>}/>
+    <Route path="/dashboard" element={<Dashboard />} />
     <Route path = "/product" element = {<Product/>}/>
     <Route path = "/education" element = {<Education/>}/> 
     <Route path = "/agriculture" element = {<Agriculture/>}/>
