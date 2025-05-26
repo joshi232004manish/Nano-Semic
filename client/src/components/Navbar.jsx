@@ -1,69 +1,56 @@
-
-// import logo from '../assets/logo.png'
-// import React, { useState } from "react";
-// import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-// import { useNavigate, NavLink } from "react-router-dom";
-
-// function Navbar ()  {
-
-//   const navigate = useNavigate();
-  
-
-
-//   return (
-//     <>
-//     <nav className="bg-ogcolor  py-5">
-//         <div className="max-w-[1280px] mx-auto flex items-center justify-between md:px-2 sm:px-2">
-//             <div className='flex text 2xl item-center gap-2'>
-
-//             <img src={logo} alt="" className="w-12" ></img>
-//             <span className='text-white py-2  text-xl font-semibold'>nanosemic</span>
-//             </div>
-
-//         <ul className="text-white text-bold text-lg item-center font-bold hidden md:flex pl-9 md:pl-0 gap-10 hover:cursor-pointer justify-between">
-//           <li className ='hover:cursor-pointer'>
-//             <NavLink to = "/home">Home</NavLink>
-//             </li>
-//             <li>
-
-//             <NavLink to = "/about">About </NavLink>
-//             </li>
-//             <li>
-
-//             <NavLink to = "/pro">Product</NavLink>
-//             </li>
-//             <li>
-//             <NavLink to = "/services">Services</NavLink>
-//             </li>
-//             <li>
-//             <NavLink to ="/Contact">Contact</NavLink>
-//             </li>
-//               <button onClick={()=>navigate("/login")} className="bg-white inline- text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"> Login</button>
-//              </ul>
-            
-//         </div>
-//     </nav>
-
-//     </>
-//   )
-// }
-
-// export default Navbar
-
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { useNavigate, NavLink } from "react-router-dom";
 import logo from '../assets/logo.png';
+import { auth } from "../Firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import axios from "axios";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [mongoUser, setMongoUser] = useState(null);
 
+  // Toggle mobile nav menu
   const handleNav = () => {
     setNav(!nav);
   };
+
+  useEffect(() => {
+    // Firebase user observer
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setFirebaseUser(currentUser);
+    });
+
+    // Check MongoDB JWT token
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.get("http://localhost:5000/api/admin/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(res => setMongoUser(res.data))
+      .catch(() => localStorage.removeItem("token"));
+    }
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    if (firebaseUser) {
+      await signOut(auth);
+      setFirebaseUser(null);
+    }
+    if (mongoUser) {
+      localStorage.removeItem("token");
+      setMongoUser(null);
+    }
+    alert("Successfully logged out!");
+    navigate("/signin");
+  };
+
+  // Determine if user is logged in (either Firebase or MongoDB)
+  const isLoggedIn = firebaseUser || mongoUser;
 
   return (
     <>
@@ -88,22 +75,38 @@ function Navbar() {
               <li>
                 <NavLink to="/services">Services</NavLink>
               </li>
-              <li>
-                <NavLink to="/contact">Contact</NavLink>
-              </li>
+              {isLoggedIn && (
+                <li>
+                  <NavLink to="/dashboard">Profile</NavLink>
+                </li>
+              )}
             </ul>
-            <button
-              onClick={() => navigate("/signup")}
-              className="bg-white text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"
-            >
-              Signup
-            </button>
-            <button
-              onClick={() => navigate("/signin")}
-              className="bg-white text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"
-            >
-              Signin
-            </button>
+
+            {!isLoggedIn && (
+              <>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="bg-white text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"
+                >
+                  Signup
+                </button>
+                <button
+                  onClick={() => navigate("/signin")}
+                  className="bg-white text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"
+                >
+                  Signin
+                </button>
+              </>
+            )}
+
+            {isLoggedIn && (
+              <button
+                onClick={handleLogout}
+                className="bg-white text-black rounded-full py-1 px-4 hover:cursor-pointer text-lg font-semibold"
+              >
+                Logout
+              </button>
+            )}
           </div>
 
           <div className="md:hidden" onClick={handleNav}>
@@ -142,18 +145,44 @@ function Navbar() {
             <li onClick={handleNav}>
               <NavLink to="/services">Services</NavLink>
             </li>
-            <li onClick={handleNav}>
-              <NavLink to="/contact">Contact</NavLink>
-            </li>
-            <button
-              onClick={() => {
-                navigate("/signup");
-                handleNav();
-              }}
-              className="bg-white text-black rounded-full py-2 px-4 mt-4 text-lg font-semibold"
-            >
-              Signup
-            </button>
+            {isLoggedIn && (
+              <li onClick={handleNav}>
+                <NavLink to="/dashboard">Profile</NavLink>
+              </li>
+            )}
+            {!isLoggedIn && (
+              <>
+                <button
+                  onClick={() => {
+                    navigate("/signup");
+                    handleNav();
+                  }}
+                  className="bg-white text-black rounded-full py-2 px-4 mt-4 text-lg font-semibold"
+                >
+                  Signup
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/signin");
+                    handleNav();
+                  }}
+                  className="bg-white text-black rounded-full py-2 px-4 mt-4 text-lg font-semibold"
+                >
+                  Signin
+                </button>
+              </>
+            )}
+            {isLoggedIn && (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  handleNav();
+                }}
+                className="bg-white text-black rounded-full py-2 px-4 mt-4 text-lg font-semibold"
+              >
+                Logout
+              </button>
+            )}
           </ul>
         </div>
       </nav>
