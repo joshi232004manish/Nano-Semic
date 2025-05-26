@@ -19,7 +19,7 @@ const [listing, setListing] = useState(null);
     const fetchListing = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/product/get/682be6f9940ad43e4e8ad852"
+          "http://localhost:3000/api/product/get/682c1c4b8a8dd6a09f1b1566"
         );
         setListing(response.data); // ✅ Axios response data
         console.log(response.data);
