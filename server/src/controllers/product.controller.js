@@ -1,6 +1,10 @@
 
 import { errorHandler } from "../utils/error.js";
 import Product from "../models/product.model.js";
+import cloudinary from "../../config/cloudinary.js";
+import fs from "fs/promises";
+
+import express from "express";
 
 export const createProduct = async(req,res,next)=>{
     try {
@@ -31,7 +35,7 @@ export const getProducts = async(req,res,next)=>{
 
     try {
        
-    const products = await Product.find()
+    const products = await Product.find();
     return res.status(200).json(products);
 
 
@@ -39,4 +43,24 @@ export const getProducts = async(req,res,next)=>{
     } catch (error) {
         next(error);
     }
+}
+
+export const uploadImage = async (req, res) => {
+  try {
+    if(!req.file){
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    
+    // Cloudinary URL
+    const imageUrl = req.file.path;
+
+    res.status(200).json({
+      message: "Image uploaded successfully",
+      url: imageUrl,
+    });
+
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 }

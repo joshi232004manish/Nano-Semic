@@ -26,7 +26,7 @@ function Navbar() {
     // Check MongoDB JWT token
     const token = localStorage.getItem("token");
     if (token) {
-      axios.get("http://localhost:5000/api/admin/profile", {
+      axios.get("http://localhost:3000/api/admin/profile", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(res => setMongoUser(res.data))
@@ -54,7 +54,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-ogcolor py-5">
+      <nav className="bg-black py-5">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between md:px-2 sm:px-2">
           <div className="flex text-2xl items-center gap-2">
             <img src={logo} alt="Logo" className="w-12" />

@@ -18,7 +18,8 @@ import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 import Dashboard from './components/Dashboard'
-import ProductPage from './components/Product_page'
+import ProductPage from './components/product_page'
+import ParticlesBackground from './components/particle'
 function App() {
   
   return (
@@ -40,6 +41,7 @@ function App() {
     <Route path ="/safety" element = {<Safety/>}/>
     <Route path ="/policy" element ={<Policy/>}/>
     <Route path = "/terms"  element ={<Terms/>}/>
+    <Route path = "/particle"  element ={<ParticlesBackground/>}/>
     <Route path = "/pro" element = {<Pro/>}/>
     <Route path ="/services" element ={<Services/>}/>
     <Route path ="/productpage" element ={<ProductPage/>}/>

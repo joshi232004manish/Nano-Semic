@@ -1,303 +1,115 @@
-import React from 'react'
-import nano from '../assets/nano.jpg'
-import { useNavigate } from 'react-router-dom'
-import Vision from './Vis'
-import logo from '../assets/our-service.jpg'
+import React, { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+// import nano from '../assets/nano.jpg'
+import { useNavigate } from "react-router-dom";
 
-import Why from './why'
-import Download from './Download'
-import yes from '../assets/yes.webp'
-import health from '../assets/health.jpg'
-import agri from '../assets/ag.jpg'
-import safe from '../assets/safe.jpg'
-import edu from '../assets/edu.jpg'
-import promo from '../assets/promo.jpeg'
-import promo1 from '../assets/promo1.jpeg'
-import { Link } from 'react-router-dom'
+function Home() {
+  const navigate = useNavigate();
+  const videoRef = useRef(null);
 
-function Home () {
-  const navigate = useNavigate()
-
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.75;
+    }
+  }, []);
 
   return (
-    <>
-    {/* <div className='bg-ogcolor w-full min-h-[640px]'>
-      <div div className="max-w-[1280px] mx-auto grid md:grid-cols-2 px-4 sm:px-6 lg:px-8">
-        <div className= "">
-        <h1 className="text-white text-8xl text-left mt-10">
-          nanosemic</h1>
-          <h3 className="text-white text-xl font-semibold -mt-2 mx-[140px]">
-            Where pricision meets possibilities
-          </h3>
-        <p className="text-white mt-20 tracking-normal">Welcome to namosemic, your trusted partner in the<br>
-        </br> semiconductor industry. Our focus on innovation,<br>
-        </br>quality, and customer satisfaction sets us apart from <br></br>
-        the competition, and we are dedicated to delivering <br>
-         </br>the best possible solutions to meet your needs.<br>
-         </br> Our experienced team is always available to answer<br>
-         </br> your questions and provide expert advice, and<br>
-         </br> we look forward to working with you to help <br>
-         </br>you achieve your goals.
+    <div className="relative w-full min-h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute w-full h-full object-cover z-0"
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10" />
 
+      {/* Hero Section */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+        className="relative z-20 max-w-4xl mx-auto bg-black bg-opacity-60 text-gray-200 rounded-xl shadow-2xl p-10 backdrop-blur-md text-center mt-24"
+      >
+        <h1 className="text-5xl font-extrabold font-serif mb-4 text-[#f8fafc]">
+          nanosemic
+        </h1>
+        <h2 className="text-lg font-semibold mb-6 text-[#cbd5e1]">
+          Where precision meets possibilities
+        </h2>
+        <p className="text-md text-[#e2e8f0] leading-relaxed mb-6">
+          Welcome to nanosemic, your trusted partner in the semiconductor
+          industry. Our focus on innovation, quality, and customer satisfaction
+          sets us apart from the competition. We are dedicated to delivering the
+          best possible solutions to meet your needs. Our experienced team is
+          always available to answer your questions and provide expert advice.
+          We look forward to working with you to help you achieve your goals.
+        </p>
+        <motion.button
+          onClick={() => navigate("/about")}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 0 25px rgba(0, 255, 255, 0.7)",
+            backgroundColor: "#f8fafc",
+          }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          className="relative z-10 px-8 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg"
+        >
+          <span className="relative z-10"> Learn more</span>
+        </motion.button>
+      </motion.div>
 
+      {/* WHAT WE OFFER Section */}
+      <div className="relative z-20 max-w-6xl mx-auto mt-24 px-4 pb-16">
+        <h2 className="text-4xl text-white font-bold text-center mb-12">
+          WHAT WE OFFER
+        </h2>
 
-           </p>
-           <button onClick={()=>navigate("/about")} className="bg-white text-black  rounded-full py-2 px-4 hover:cursor-pointer mt-8 text-lg font-semibold">Learn more</button>
-        
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* SERVICES */}
+          <motion.div
+            initial={{ x: 200, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition hover:scale-105 border border-gray-200/20"
+          >
+            <h3 className="text-2xl font-bold mb-4">OUR SERVICES</h3>
+            <p className="text-gray-200 leading-relaxed">
+              We provide cutting-edge consulting, rapid prototyping, and design
+              services tailored to the semiconductor industry. Our experienced
+              team supports you from concept to implementation with reliable
+              expertise, innovation, and 24/7 support.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ x: 200, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition hover:scale-105 border border-gray-200/20"
+          >
+            <h3 className="text-2xl font-bold mb-4">OUR PRODUCTS</h3>
+            <p className="text-gray-200 leading-relaxed">
+              Explore our suite of high-performance semiconductor components,
+              tools, and embedded solutions. Each product is designed with
+              precision engineering to ensure performance, energy efficiency,
+              and seamless integration into your workflow.
+            </p>
+          </motion.div>
         </div>
-        
-      
-      <div className="mt-36">
-        <img src={nano} alt="" className="" />
       </div>
-      </div>
-      </div> */}
-
-      {/* another */}
-      <section class="bg-ogcolor min-h-[640px]">
-    <div class="max-w-[1280px] mx-auto py-16 px-4 ">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center ">
-            <div class="max-w-lg sm:px-6 lg:px-8">
-                <h1 class="text-6xl font-extrabold text-white font-serif">
-                  nanosemic </h1>
-                <h2 className=" text-md font-bold text-white sm-text-normal -mt-2 px-[80px]">
-                  Where precision meets possibilities
-                </h2>
-                <p class="mt-20 text-white text-md justify-center">Welcome to namosemic, your trusted partner in the
-         semiconductor industry. Our focus on innovation,
-        quality, and customer satisfaction sets us apart from 
-        the competition, and we are dedicated to delivering 
-         the best possible solutions to meet your needs.
-          experienced team is always available to answer
-          your questions and provide expert advice and
-          we look forward to working with you to help 
-         you achieve your goals.</p>
-                    <button onClick={()=>navigate("/about")} className="bg-white text-black  rounded-full py-2 px-4 hover:cursor-pointer mt-8 text-lg font-semibold">Learn more</button>
-            </div>
-            <div class="mt- md:mt-0">
-                <img src={nano} alt="About Us Image" class="object-cover rounded-lg shadow-md"/>
-            </div>
-        </div>
     </div>
-</section>
-{/* end  */}
-
-
-
-
-
-
-
-      <Vision/>
-      
-      <div class="max-w-[1280px] mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-        <div class="mt-12 md:mt-0">
-                <img src={promo} alt="About Us Image" class="object-cover rounded-lg shadow-md"/>
-                <div className="">
-                  <h1 className="text-black font-serif text-2xl fond-bold py-2">
-                    Products
-                  </h1>
-                  <p className="text-black">
-                    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, molestiae repellat
-                     est quae non a delectus fugit quisquam odio quibusdam dolorum.
-                      Fuga id ut quae delectus eum! Hic, earum blanditiis. */}
-
-                  </p>
-                </div>
-                <div class="mt-8">
-                    <Link to="/pro" class="text-ogcolor hover:text-blue-500 font-medium">Learn more
-                        <span class="ml-2">&#8594;</span></Link>
-                </div>
-            </div>
-            
-
-
-            <div class="mt-12 md:mt-0">
-                <img src={promo1} alt="About Us Image" class="object-cover rounded-lg shadow-md"/>
-                <div className="">
-                  <h1 className="font-serif text-2xl fond-bold py-2">
-                    Services
-                  </h1>
-                  <p className="text-black">
-                    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, molestiae repellat
-                     est quae non a delectus fugit quisquam odio quibusdam dolorum.
-                      Fuga id ut quae delectus eum! Hic, earum blanditiis. */}
-
-                  </p>
-                </div>
-                <div class="mt-8">
-                    <Link to="/services" class="text-ogcolor hover:text-blue-500 font-medium">Learn more
-                        <span class="ml-2">&#8594;</span></Link>
-                </div>
-          
-
-          
-           </div>
-
-
-
-
-
-          </div>
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-      {/* senors */}
-      {/* <section class="bg-gray-100">
-    <div class="max-w-[1280px] mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="max-w-lg">
-                <h2 class="text-3xl font-semibold text-gray-900 sm:text-4xl ">Semiconductors</h2>
-                <p class="mt-4 text-gray-600 text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis
-                    eros at lacus feugiat hendrerit sed ut tortor. Suspendisse et magna quis elit efficitur consequat.
-                    Mauris eleifend velit a pretium iaculis. Donec sagittis velit et magna euismod, vel aliquet nulla
-                    malesuada. Nunc pharetra massa lectus, a fermentum arcu volutpat vel
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore in eum iusto, mollitia dolores nemo praesentium ut? Laboriosam, necessitatibus ducimus..</p>
-                
-            </div>
-            <div class="mt-12 md:mt-0">
-                <img src={cpu} alt="About Us Image" class="object-cover rounded-lg shadow-md"/>
-            </div>
-        </div>
-    </div>
-</section> */}
-
-<div className="py-[100px] -mt-10">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-4 md:grid-col-2 sm:2 gap-8 px-4 sm:px-6 lg:px-8">
-
-          {/* card-1 */}
-          <div className="shadow-xl max-w-sm rounded overflow-hidden">
-
-            
-                <img src={health} alt="" className="w-full" />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        Healthcare Products
-                    </div>
-                    <p className="text-gray-700 text-base">
-                        {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore2 */}
-                    </p>
-
-                </div>
-                <div className=" px-6 py-3">
-                  <button onClick={()=> navigate("/product")} className="bg-gray-900 text-white rounded-full py-0 px-2 hover:cursor-pointer mt-5 text-lg font-semibold">
-                  Explore more</button>
-                  
-                </div>
-                </div>
-
-                {/* cards-2 */}
-
-               <div className= "shadow-xl max-w-sm rounded overflow-hidden">
-            <img src={edu} alt="" className="w-full" />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        Education Products
-                    </div>
-                    <p className="text-gray-700 text-base">
-                        {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore2 */}
-                    </p>
-                </div>
-                <div className=" px-6 py-3">
-                <button onClick={()=> navigate("/education")} className="bg-gray-900 text-white rounded-full py-0 px-2 hover:cursor-pointer mt-5 text-lg font-semibold">
-                Explore more</button>
-                  
-                </div>
-                </div>
-
-                {/* cards-3 */}
-
-          <div className="shadow-xl  max-w-sm rounded overflow-hidden">
-
-            
-                <img src={agri} alt="" className="w-full" />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        Agriculture Products
-                    </div>
-                    <p className="text-gray-700 text-base">
-                        {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore2 */}
-                    </p>
-                </div>
-                <div className=" px-6 py-3">
-                <button onClick={()=> navigate("/agriculture")} className="bg-gray-900 text-white rounded-full py-0 px-2 hover:cursor-pointer mt-5 text-lg font-semibold">
-                Explore more</button>
-                
-                  
-            
-                </div>
-                </div>
-
-                {/* cards-4 */}
-          <div className="shadow-2xl max-w-sm rounded overflow-hidden">
-
-            
-                <img src={safe} alt="" className="w-full" />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        Safety Products
-                    </div>
-                    <p className="text-gray-700 text-base">
-                        {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore2 */}
-                    </p>
-                </div>
-                <div className=" px-6 py-3">
-                <button onClick={()=> navigate("/safety")} className="bg-gray-900 text-white rounded-full py-0 px-2 hover:cursor-pointer mt-5 text-lg font-semibold">
-                Explore more</button>
-                  
-                </div>
-                </div>
-                
-
-          
-          
-
-
-          
-          </div>
-          
-
-        </div>
-
-
-        <section className= " overflow-hidden">
- <div class="max-w-[1280px]   px-8 md:px-12 mx-auto py-12 lg:py-24 space-y-24 h-svh flex flex-col justify-center">
-  <div class="flex flex-col sm:flex-row mx-auto">
-    <a href="Services"> <img src={logo} class="rounded-xl  rotate-6 hover:rotate-0 duration-500 hover:-translate-y-12 h-full
-     w-full object-cover hover:scale-150 transform origin-bottom" alt="#_"/> </a>
-     <a href="/Services">
-       <img src={logo} class="rounded-xl  -rotate-12 hover:rotate-0 duration-500 hover:-translate-y-12 
-       h-full w-full object-cover hover:scale-150 transform origin-bottom" alt="#_"/> </a>
-       <a href="Services"> <img src={logo} class="rounded-xl  rotate-6 hover:rotate-0 duration-500 
-       hover:-translate-y-12 h-full w-full object-cover hover:scale-150 transform origin-bottom" alt="#_"/> </a>
-       
-       
-
-   </div>
-   </div>
-   </section>
-
-        
-
-
-      <Why/>
-      <Download/>
-      </>
-      
-  
-  )
+  );
 }
 
-export default Home
+export default Home;

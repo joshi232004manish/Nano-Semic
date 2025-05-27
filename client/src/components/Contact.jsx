@@ -23,7 +23,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
      // Send feedback to your backend API
-    const response = await axios.post("http://localhost:5000/api/auth/contact", {
+    await axios.post("http://localhost:3000/api/auth/contact", {
       name: formData.name,
       email: formData.email,
       rating: formData.rating,
