@@ -43,8 +43,9 @@ function App() {
     <Route path = "/terms"  element ={<Terms/>}/>
     <Route path = "/particle"  element ={<ParticlesBackground/>}/>
     <Route path = "/pro" element = {<Pro/>}/>
+    <Route path = "/pro/:id" element = {<ProductPage/>}/>
     <Route path ="/services" element ={<Services/>}/>
-    <Route path ="/productpage" element ={<ProductPage/>}/>
+    {/* <Route path ="/productpage" element ={<ProductPage/>}/> */}
     {/* <Route path='/signup' element = {<Signup/>}/> */}
     
    

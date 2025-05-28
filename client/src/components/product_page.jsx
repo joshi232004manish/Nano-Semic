@@ -10,16 +10,15 @@ import { useParams } from "react-router-dom";
 //import "swiper/css/navigation";
 import axios from "axios";
 
-
-
 const ProductPage = () => {
+  const params = useParams();
   const [selectedImage, setSelectedImage] = useState(null);
 const [listing, setListing] = useState(null);
    useEffect(() => {
     const fetchListing = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/product/get/682c1c4b8a8dd6a09f1b1566"
+          `http://localhost:3000/api/product/get/${params.id}`
         );
         setListing(response.data); // ✅ Axios response data
         console.log(response.data);

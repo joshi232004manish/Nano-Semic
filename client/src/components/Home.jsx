@@ -52,7 +52,7 @@ function Home() {
           always available to answer your questions and provide expert advice.
           We look forward to working with you to help you achieve your goals.
         </p>
-        <motion.button
+        {/* <motion.button
           onClick={() => navigate("/about")}
           whileHover={{
             scale: 1.05,
@@ -64,7 +64,25 @@ function Home() {
           className="relative z-10 px-8 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg"
         >
           <span className="relative z-10"> Learn more</span>
-        </motion.button>
+        </motion.button> */}
+        <button className="group relative h-12 w-full items-center justify-center rounded-md border border-slate-600 bg-[linear-gradient(110deg,#1a1a1a,45%,#3a3a3a,55%,#1a1a1a)] bg-[length:200%_100%] px-6 font-medium text-slate-200 shadow-[0px_1px_0px_0px_#ffffff60_inset,0px_-1px_0px_0px_#ffffff60_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-700)_inset,0px_-1px_0px_0px_var(--zinc-700)_inset] transition-colors focus:outline-none animate-shimmer">
+          <span className="flex w-full justify-center items-center gap-2">
+            Learn More
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              strokeWidth="0"
+              viewBox="0 0 512 512"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="m16 464 480-208L16 48v160l320 48-320 48z"></path>
+            </svg>
+          </span>
+          <span className="group-hover:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></span>
+          <span className="group-hover:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></span>
+        </button>
       </motion.div>
 
       {/* WHAT WE OFFER Section */}
@@ -80,7 +98,11 @@ function Home() {
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.2 }}
-            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition hover:scale-105 border border-gray-200/20"
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.4, ease: "easeInOut" },
+            }}
+            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl border border-gray-200/20"
           >
             <h3 className="text-2xl font-bold mb-4">OUR SERVICES</h3>
             <p className="text-gray-200 leading-relaxed">
@@ -96,7 +118,11 @@ function Home() {
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.2 }}
-            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition hover:scale-105 border border-gray-200/20"
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.4, ease: "easeInOut" },
+            }}
+            className="bg-white/10 backdrop-blur-lg text-white rounded-2xl shadow-lg p-8 hover:shadow-2xl border border-gray-200/20"
           >
             <h3 className="text-2xl font-bold mb-4">OUR PRODUCTS</h3>
             <p className="text-gray-200 leading-relaxed">
