@@ -19,6 +19,7 @@ import Signup from './components/Signup'
 import Signin from './components/Signin'
 import Dashboard from './components/Dashboard'
 import ProductPage from './components/Product_page'
+import AdminDashboard from './components/Admin/AdminDashboard'
 function App() {
   
   return (
@@ -43,6 +44,7 @@ function App() {
     <Route path = "/pro" element = {<Pro/>}/>
     <Route path ="/services" element ={<Services/>}/>
     <Route path ="/productpage" element ={<ProductPage/>}/>
+    <Route path ="/adminDashboard" element = {<AdminDashboard/>}/>
     {/* <Route path='/signup' element = {<Signup/>}/> */}
     
    
