@@ -10,9 +10,8 @@ import { useParams } from "react-router-dom";
 //import "swiper/css/navigation";
 import axios from "axios";
 
-
-
 const ProductPage = () => {
+  const params = useParams();
   const [selectedImage, setSelectedImage] = useState(null);
   const [listing, setListing] = useState(null);
 
@@ -30,7 +29,11 @@ const ProductPage = () => {
         console.log("Fetching listing for ID:", id);
         console.log("Fetching listing for ID:", id);
         const response = await axios.get(
+<<<<<<< HEAD
           `http://localhost:3000/api/product/get/${id}`
+=======
+          `http://localhost:3000/api/product/get/${params.id}`
+>>>>>>> babca0be4e054ab5e3299a313f4db812062e17bb
         );
         setListing(response.data); // ✅ Axios response data
         console.log(response.data);

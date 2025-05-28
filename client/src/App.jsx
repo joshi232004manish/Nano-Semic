@@ -48,6 +48,7 @@ function App() {
     <Route path = "/terms"  element ={<Terms/>}/>
     <Route path = "/particle"  element ={<ParticlesBackground/>}/>
     <Route path = "/pro" element = {<Pro/>}/>
+    <Route path = "/pro/:id" element = {<ProductPage/>}/>
     <Route path ="/services" element ={<Services/>}/>
     <Route path ="/productpage/:id" element ={<ProductPage/>}/>
     <Route path ="/adminDashboard" element = {<AdminDashboard/>}/>
