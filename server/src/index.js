@@ -2,9 +2,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import productRouter from './routes/product.route.js'
-import uploadRouter from './routes/upload.route.js'
-import authRoutes from './routes/auth.js'
-import adminRoutes from './routes/adminRoutes.js'
+
+import authRoutes from './routes/auth.route.js'
+import adminRoutes from './routes/admin.route.js'
 import cors from 'cors'
 import { errorHandler } from './utils/error.js'
 
@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO).then(() => {
 
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 
 
@@ -32,7 +32,7 @@ app.use(express.json())
 
 
 app.use('/api/product',productRouter);
-app.use('/api/image',uploadRouter);
+// app.use('/api/image',uploadRouter);
 
 app.use('/api/admin', adminRoutes);
 app.use("/api/auth", authRoutes);

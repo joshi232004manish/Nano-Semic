@@ -32,7 +32,7 @@ const Signup = () => {
             const user = await signInWithGoogle();
             const idToken = await user.getIdToken();
 
-            await fetch("http://localhost:5000/api/auth/google-signup", {
+            await fetch("http://localhost:3000/api/auth/google-signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -54,12 +54,12 @@ const Signup = () => {
         setError("");
 
         try {
-            const response = await axios.post('http://localhost:5000/api/admin/signup', {
+            await axios.post('http://localhost:3000/api/admin/signup', {
                 username: registerData.username,
                 email: registerData.email,
                 password: registerData.password,
             });
-
+            
             alert("Verification code sent to your email.");
             setEmail(registerData.email);
            // setUser(response);

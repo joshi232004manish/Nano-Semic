@@ -18,7 +18,7 @@ const Dashboard = () => {
 
         const token = localStorage.getItem('token');
         if (token) {
-            axios.get("http://localhost:5000/api/admin/profile", {
+            axios.get("http://localhost:3000/api/admin/profile", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

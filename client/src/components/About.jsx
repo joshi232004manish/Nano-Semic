@@ -339,6 +339,7 @@ const About = () => {
             <div className="max-w-lg">
               <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Mission</h2>
               <p className="mt-4 text-gray-600 text-lg">
+                To make sensor technology accessible, reliable, and affordable for everyone — from innovators building smart homes to engineers powering smart cities.
                 {/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi ipsum voluptatum deserunt aspernatur fugiat vel dolores et, qui atque aut! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, non tempora dolore ipsa labore praesentium repellat blanditiis maiores cumque veritatis omnis voluptatibus, laborum consectetur unde laboriosam. */}
               </p>
             </div>
@@ -356,6 +357,11 @@ const About = () => {
                   <span className="block">We are innovative</span>
                 </h2>
                 <p className="mt-4 text-base leading-6 text-black">
+                  At the heart of our company is a relentless drive for innovation. We don’t just sell sensors — we craft intelligent sensing solutions that transform industries. From IoT-enabled environments to advanced automation, our cutting-edge sensor technology is designed to empower businesses and improve everyday life.
+
+Our R&D team constantly explores new materials, smarter algorithms, and seamless integration techniques to ensure our sensors stay ahead of the curve. 
+
+Innovation is not a buzzword for us — it's our foundation.
                   {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. */}
                 </p>
               </div>

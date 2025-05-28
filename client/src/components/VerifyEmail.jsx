@@ -14,14 +14,14 @@ const VerifyEmail = ({ email }) => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-     const res= await axios.post("http://localhost:5000/api/admin/verify-email", { email, code });
-        localStorage.setItem('token', res.data.token);
+     const res= await axios.post("http://localhost:3000/api/admin/verify-email", { email, code });
+      localStorage.setItem('token', res.data.token);
      
       localStorage.setItem('user', JSON.stringify({
         username: res.data.username,
         email: res.data.email,
       }));
-
+      
       setVerified(true);
       setMessage("Email verified successfully! Redirecting...");
 
