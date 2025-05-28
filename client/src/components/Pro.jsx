@@ -12,16 +12,17 @@ import axios from "axios";
 const Pro = () => {
 
   const categories = [
-  'Raw Materials and Components',
-  'Sensors and Electronics',
-  
-];
+    'Raw Materials and Components',
+    'Sensors and Electronics',
+
+  ];
 
 
 
-const [products,setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate(); 
 
-useEffect(() => {
+  useEffect(() => {
     const fetchListing = async () => {
       try {
         const response = await axios.get(
@@ -36,8 +37,11 @@ useEffect(() => {
     };
 
     fetchListing();
-  },  []);
+  }, []);
 
+ const handleProductClick = async (id) => {
+    navigate(`/productpage/${id}`);
+  };
 
   return (
     <>
@@ -98,6 +102,7 @@ useEffect(() => {
             {products.map((product, idx) => (
               <div
                 key={idx}
+                onClick={() => handleProductClick(product._id)}
                 className="bg-gray-50 p-4 rounded-xl shadow hover:shadow-lg transition"
               >
                 <img

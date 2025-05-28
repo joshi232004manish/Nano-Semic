@@ -18,13 +18,13 @@ import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 import Dashboard from './components/Dashboard'
-<<<<<<< HEAD
-import ProductPage from './components/Product_page'
+//import ProductPage from './components/Product_page'
 import AdminDashboard from './components/Admin/AdminDashboard'
-=======
+
 import ProductPage from './components/product_page'
 import ParticlesBackground from './components/particle'
->>>>>>> 84b53e2e9c202f51e24aa0348d2c61687cb6886d
+import ProductListingAdmin from './components/Admin/ProducListingAdmin'
+
 function App() {
   
   return (
@@ -49,8 +49,9 @@ function App() {
     <Route path = "/particle"  element ={<ParticlesBackground/>}/>
     <Route path = "/pro" element = {<Pro/>}/>
     <Route path ="/services" element ={<Services/>}/>
-    <Route path ="/productpage" element ={<ProductPage/>}/>
+    <Route path ="/productpage/:id" element ={<ProductPage/>}/>
     <Route path ="/adminDashboard" element = {<AdminDashboard/>}/>
+    <Route path ="/productlist" element ={<ProductListingAdmin/>}/>
     {/* <Route path='/signup' element = {<Signup/>}/> */}
     
    

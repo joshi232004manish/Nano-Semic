@@ -15,17 +15,22 @@ import axios from "axios";
 const ProductPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [listing, setListing] = useState(null);
-  
+
   const [queryEmail, setQueryEmail] = useState('');
   const [queryMessage, setQueryMessage] = useState('');
   const [queryStatus, setQueryStatus] = useState('');
   const [queryLoading, setQueryLoading] = useState(false);
 
+ const { id } = useParams();
+ 
+//fetch single product by id
   useEffect(() => {
     const fetchListing = async () => {
       try {
+        console.log("Fetching listing for ID:", id);
+        console.log("Fetching listing for ID:", id);
         const response = await axios.get(
-          "http://localhost:3000/api/product/get/682c1c4b8a8dd6a09f1b1566"
+          `http://localhost:3000/api/product/get/${id}`
         );
         setListing(response.data); // ✅ Axios response data
         console.log(response.data);
@@ -33,10 +38,11 @@ const ProductPage = () => {
       } catch (error) {
         console.error("Error fetching listing:", error);
       }
+      
     };
 
     fetchListing();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (listing?.imageUrls?.length > 0) {
@@ -210,56 +216,55 @@ const ProductPage = () => {
           </div>
         </div>
         {/* Product Query Form */}
-          <div className="mt-12 border-t pt-8">
-            <h3 className="text-xl font-bold mb-4">Have a question about this product?</h3>
-            <form className="space-y-4 max-w-xl" onSubmit={handleQuerySubmit}>
-              <div>
-                <label htmlFor="email" className="block font-medium text-gray-700">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={queryEmail}
-                  onChange={(e) => setQueryEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
-                />
+        <div className="mt-12 border-t pt-8">
+          <h3 className="text-xl font-bold mb-4">Have a question about this product?</h3>
+          <form className="space-y-4 max-w-xl" onSubmit={handleQuerySubmit}>
+            <div>
+              <label htmlFor="email" className="block font-medium text-gray-700">
+                Your Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={queryEmail}
+                onChange={(e) => setQueryEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block font-medium text-gray-700">
+                Your Question
+              </label>
+              <textarea
+                id="message"
+                value={queryMessage}
+                onChange={(e) => setQueryMessage(e.target.value)}
+                rows="4"
+                placeholder="Ask your question about this product..."
+                required
+                className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              disabled={queryLoading}
+              className={`bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition ${queryLoading ? 'opacity-50' : ''}`}
+            >
+              {queryLoading ? 'Sending...' : 'Submit Query'}
+            </button>
+
+            {queryStatus && (
+              <div className={`mt-4 ${queryStatus.includes('success') ? 'text-green-600' : 'text-red-500'}`}>
+                {queryStatus}
               </div>
+            )}
+          </form>
+        </div>
 
-              <div>
-                <label htmlFor="message" className="block font-medium text-gray-700">
-                  Your Question
-                </label>
-                <textarea
-                  id="message"
-                  value={queryMessage}
-                  onChange={(e) => setQueryMessage(e.target.value)}
-                  rows="4"
-                  placeholder="Ask your question about this product..."
-                  required
-                  className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                disabled={queryLoading}
-                className={`bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition ${queryLoading ? 'opacity-50' : ''}`}
-              >
-                {queryLoading ? 'Sending...' : 'Submit Query'}
-              </button>
-
-              {queryStatus && (
-                <div className={`mt-4 ${queryStatus.includes('success') ? 'text-green-600' : 'text-red-500'}`}>
-                  {queryStatus}
-                </div>
-              )}
-            </form>
-          </div>
-
-        
 
       </div>
     </div>
