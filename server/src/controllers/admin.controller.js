@@ -101,7 +101,32 @@ const login = async (req, res) => {
   const token = jwt.sign({ admin: { id: admin.id } }, process.env.JWT_SECRET, {
     expiresIn: "3d",
   });
-  res.json({ token, username: admin.username });
+  res.json({ email: admin.email, token, username: admin.username});
+};
+// Save Firebase user to MongoDB
+
+export const saveFirebaseUser = async (req, res) => {
+  const { uid, email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    let user = await Admin.findOne({ email });
+
+    if (!user) {
+      user = new Admin({ uid, email, isVerified: true });
+      await user.save();
+    }
+    const token = jwt.sign({ admin: { id: user.id } }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
+    });
+    res.status(200).json({ message: "User saved to MongoDB", user,token });
+  } catch (err) {
+    console.error("Error saving user:", err);
+    res.status(500).json({ message: "MongoDB Save Failed" });
+  }
 };
 
 const profile = async (req, res) => {

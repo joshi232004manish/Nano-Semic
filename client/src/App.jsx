@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {  Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Product from './components/Product'
@@ -24,13 +24,15 @@ import AdminDashboard from './components/Admin/AdminDashboard'
 import ProductPage from './components/product_page'
 import ParticlesBackground from './components/particle'
 import ProductListingAdmin from './components/Admin/ProducListingAdmin'
-
+import Cartboard from './components/cart'
+import BottomCartPopup from './components/BottomCartPopup';
+import AnimatedCartIcon from './components/AninmatedCartIcon';
 function App() {
   
   return (
     <>
 
-    <Router>
+    
     <Navbar/>
     <Routes>
       <Route path ="/" element={<Home/>}/>
@@ -53,18 +55,14 @@ function App() {
     <Route path ="/productpage/:id" element ={<ProductPage/>}/>
     <Route path ="/adminDashboard" element = {<AdminDashboard/>}/>
     <Route path ="/productlist" element ={<ProductListingAdmin/>}/>
+    <Route path ="/cart" element = {<Cartboard/>}/>
     {/* <Route path='/signup' element = {<Signup/>}/> */}
-    
-   
-     
+  
 
     </Routes>
     <Footer/>
-    </Router>
-    
-  
-
-    
+     <BottomCartPopup />
+     <AnimatedCartIcon />
     </>
 
 

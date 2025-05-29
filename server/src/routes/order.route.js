@@ -1,14 +1,18 @@
-import express from 'express'
-import Order from '../models/Order.js';
-import { orderProduct} from '../controllers/order.controller.js';
-import auth from '../middleware/auth.js';
+import express from 'express';
+import {
+  createOrder,
+  getAllOrders,
+  getOrderById,
+  updateOrderStatus,
+  deleteOrder,
+} from '../controllers/order.controller.js';
 
 const router = express.Router();
 
-router.post('/createorder' , auth,orderProduct);
-// router.delete('/delete/:id',deleteListing);
-// router.post('/update/:id',updateListing);
-//router.get('/get/:id',getProduct);
-//router.get('/get',getProducts);
+router.post('/create', createOrder);
+router.get('/get', getAllOrders);
+router.get('/get/:id', getOrderById);
+router.put('/update/:id', updateOrderStatus);
+router.delete('/delete/:id', deleteOrder);
 
-export default  router;
+export default router;
