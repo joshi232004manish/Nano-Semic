@@ -19,10 +19,11 @@ const ProductPage = () => {
   const [queryMessage, setQueryMessage] = useState('');
   const [queryStatus, setQueryStatus] = useState('');
   const [queryLoading, setQueryLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
- const { id } = useParams();
- 
-//fetch single product by id
+  const { id } = useParams();
+
+  //fetch single product by id
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -38,7 +39,7 @@ const ProductPage = () => {
       } catch (error) {
         console.error("Error fetching listing:", error);
       }
-      
+
     };
 
     fetchListing();
@@ -91,7 +92,7 @@ const ProductPage = () => {
     setQueryStatus('');
     setQueryLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/query', {
+      const res = await axios.post('http://localhost:3000/api/auth/query', {
         email: queryEmail,
         message: queryMessage,
       });
@@ -103,6 +104,48 @@ const ProductPage = () => {
       setQueryStatus('Failed to send query. Try again.');
     } finally {
       setQueryLoading(false);
+    }
+  };
+  // Handle Add to Cart functionality
+  const handleAddToCart = async () => {
+    // If getting from localStorage
+    const storedUser = localStorage.getItem("user");
+    console.log(storedUser); // this might be just a string (the email)
+
+    // If it's JSON, then parse:
+    const userObject = JSON.parse(storedUser);
+    console.log(userObject.email); // works only if storedUser is a JSON object
+
+    if (!storedUser) return alert("Please login first");
+    // console.log("userId", userId.email);
+    try {
+      await axios.post("http://localhost:3000/api/cart/add", {
+        useremail: userObject.email, // Assuming userObject contains email
+        productId: listing._id,
+        quantity,
+      });
+      alert("Added to cart!");
+       // Notify popup immediately
+  window.dispatchEvent(new CustomEvent('cartUpdated'));
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add to cart.");
+    }
+  };
+  // Handle Buy Now functionality
+  const handleBuyNow = async () => {
+    const userId = localStorage.getItem("user");
+    if (!userId) return alert("Please login first");
+
+    try {
+      await axios.post("http://localhost:3000/api/order/direct", {
+        userId,
+        products: [{ product: listing._id, quantity }],
+      });
+      alert("Order placed!");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to place order.");
     }
   };
 
@@ -177,23 +220,44 @@ const ProductPage = () => {
           </div>
 
           <div className="flex items-center space-x-2">
-            <button className="bg-gray-300 px-3 py-1 rounded">-</button>
+            <button
+              className="bg-gray-300 px-3 py-1 rounded"
+              onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
+            >
+              -
+            </button>
+
             <input
               type="number"
-              defaultValue="1"
+              value={quantity}
+              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
               className="w-12 text-center border rounded"
             />
-            <button className="bg-gray-300 px-3 py-1 rounded">+</button>
+
+            <button
+              className="bg-gray-300 px-3 py-1 rounded"
+              onClick={() => setQuantity((prev) => prev + 1)}
+            >
+              +
+            </button>
+
           </div>
 
           <div className="flex space-x-4 mt-4">
-            <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+            <button
+              onClick={handleAddToCart}
+              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+            >
               Add to cart
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            <button
+              onClick={handleBuyNow}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
               Buy it now
             </button>
           </div>
+
         </div>
 
         {/* Description and Frequently Bought Together */}

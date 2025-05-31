@@ -42,10 +42,13 @@ function Navbar() {
 
   const handleLogout = async () => {
     if (firebaseUser) {
+       localStorage.removeItem("user");
+       localStorage.removeItem("token");
       await signOut(auth);
       setFirebaseUser(null);
     }
     if (mongoUser) {
+      localStorage.removeItem("user");
       localStorage.removeItem("token");
       setMongoUser(null);
     }
@@ -139,9 +142,8 @@ function Navbar() {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed top-0 left-0 h-full w-[250px] bg-ogcolor text-white z-50 transform ${
-            nav ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out`}
+          className={`fixed top-0 left-0 h-full w-[250px] bg-ogcolor text-white z-50 transform ${nav ? "translate-x-0" : "-translate-x-full"
+            } transition-transform duration-300 ease-in-out`}
         >
           <div className="flex justify-between items-center px-4 py-5">
             <img src={logo} alt="Logo" className="w-12" />
