@@ -40,7 +40,7 @@ const Dashboard = () => {
         localStorage.removeItem("token");
         setFirebaseUser(null);
         setMongoUser(null);
-        navigate("/signin");
+        navigate("/");
     };
 
     return (

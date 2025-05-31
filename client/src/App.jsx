@@ -15,8 +15,7 @@ import About from './components/About'
 import Login from './components/login'
 import Services from './components/Services'
 import Footer from './components/Footer'
-import Signup from './components/Signup'
-import Signin from './components/Signin'
+
 import Dashboard from './components/Dashboard'
 //import ProductPage from './components/Product_page'
 import AdminDashboard from './components/Admin/AdminDashboard'
@@ -24,6 +23,7 @@ import AdminDashboard from './components/Admin/AdminDashboard'
 import ProductPage from './components/product_page'
 import ParticlesBackground from './components/particle'
 import ProductListingAdmin from './components/Admin/ProducListingAdmin'
+import ScrollToTop from './components/scrollToTop'
 
 function App() {
   
@@ -32,13 +32,14 @@ function App() {
 
     <Router>
     <Navbar/>
+    <ScrollToTop/>
     <Routes>
       <Route path ="/" element={<Home/>}/>
-    <Route  path="/home" element= {<Home/>}/>
+    {/* <Route  path="/home" element= {<Home/>}/> */}
     <Route path= "/about" element ={<About/>}/>
     <Route path ="/Contact" element = {<Contact/>}/>
-    <Route path = "/signup" element = {<Signup/>}/>
-    <Route path="/signin"  element = {<Signin/>}/>
+    {/* <Route path = "/signup" element = {<Signup/>}/> */}
+    {/* <Route path="/signin"  element = {<Signin/>}/> */}
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path = "/product" element = {<Product/>}/>
     <Route path = "/education" element = {<Education/>}/> 
