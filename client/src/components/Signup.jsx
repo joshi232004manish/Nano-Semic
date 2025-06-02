@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signInWithGoogle } from "../components/Auth";
 import VerifyEmail from "./VerifyEmail";
-import { useUser } from './UserContext';
+
 
 const Signup = () => {
     const [registerData, setRegisterData] = useState({
@@ -16,7 +16,7 @@ const Signup = () => {
     const [error, setError] = useState("");
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
-    const { user, setUser } = useUser();
+   
 
     const navigate = useNavigate();
 

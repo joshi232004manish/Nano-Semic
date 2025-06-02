@@ -6,7 +6,7 @@ import { createProduct, getProduct, getProducts,uploadImage } from '../controlle
 
 const router = express.Router();
 
-router.post('/create' , createProduct);
+
 //router.post("/upload", upload.single("image"),uploadImage);
 router.post("/upload", upload.array("image", 10), uploadImage);
 // router.delete('/delete/:id',deleteListing);

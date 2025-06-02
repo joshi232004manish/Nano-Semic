@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { useUser } from './UserContext';
+
 
 const VerifyEmail = ({ email }) => {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
   const [verified, setVerified] = useState(false);
-  const { user, setUser } = useUser();
+  
 
   const navigate = useNavigate();
   const handleVerify = async (e) => {

@@ -10,6 +10,10 @@ import { errorHandler } from './utils/error.js'
 import orderRouter from './routes/order.route.js'
 import cartRoutes from './routes/cart.routes.js';
 import firebasesaveuser from './routes/firebasesaveuser.route.js'
+import  updateaddress  from './routes/address.route.js'
+import orderRoutes from './routes/order.route.js';
+import Admin from './models/admin.model.js'
+import orderRouterAdmin from './routes/adminorder.route.js';
 dotenv.config()
 
 mongoose.connect(process.env.MONGO).then(() => {
@@ -40,9 +44,13 @@ app.use('/api/admin', adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/auth/firebase',firebasesaveuser);
 app.use('/api/orders',orderRouter);
-
-
+app.use('/api',updateaddress)
 app.use('/api/cart', cartRoutes);
+
+app.use('/api/orders', orderRoutes);
+app.use("/api/admin", orderRouterAdmin);
+
+
 app.use((err,req,res,next)=>{
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';

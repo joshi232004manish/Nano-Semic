@@ -146,7 +146,8 @@ const About = () => {
           </h2>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="max-w-6xl mx-auto px-6 pb-20 grid gap-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))]">
+
           {[
             {
               name: "Dr. Sayan Dey",
@@ -160,22 +161,18 @@ const About = () => {
               image: akashay,
               bio: "Dr. Akashay received his B.Tech from NIT Calicut, and MS+PhD from IIT Madras. Former Senior Engineer at Micron. Assistant Professor at IIT Bhubaneswar.",
             },
-            {
-              name: "Abhishek",
-              title: "Director",
-              image: sir3,
-              bio: "Abhishek brings strong technical and entrepreneurial experience, contributing to both product innovation and team leadership at Nano Semic Pvt. Ltd.",
-            },
+
           ].map((member, i) => (
             <Section direction={i % 2 === 0 ? "up" : "down"} key={member.name}>
               <div className="bg-black/60 text-white rounded-xl overflow-hidden backdrop-blur-md border border-white/10 shadow-xl transform transition-transform duration-500  hover:scale-105 hover:border-white/30 hover:shadow-[0_0_20px_#ffffff22]">
-                <div className="w-full h-64 overflow-hidden">
+                <div className="w-full aspect-[3/2] overflow-hidden">
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
+
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">{member.name}</h3>
                   <p className="text-md text-gray-300">{member.title}</p>
