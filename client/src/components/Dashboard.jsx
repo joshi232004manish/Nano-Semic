@@ -43,7 +43,7 @@ const Dashboard = () => {
         localStorage.removeItem("user");
         setFirebaseUser(null);
         setMongoUser(null);
-        navigate("/signin");
+        navigate("/");
     };
 
     return (
