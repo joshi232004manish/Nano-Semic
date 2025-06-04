@@ -1,15 +1,22 @@
 // VerifyEmail.jsx
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useUser } from './UserContext';
+import { useSelector,useDispatch } from "react-redux";
+import { setUser, clearUser } from '../redux/user/userSlice';
 import { useModal } from '../context/loginBox'; // Adjust the import path as needed
+import { useLoad } from "../context/loading";
+import { toast } from "react-toastify";
 
+ // Use context for loading state
 const VerifyEmail = ({ email }) => {
+  const {loading,setLoading} = useLoad();
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
   const [verified, setVerified] = useState(false);
-  const { setUser } = useUser();
+  // const { setUser } = useUser();
+  const {user} = useSelector((state)=> state.user); // Access user from context
+  const dispatch = useDispatch();
   const { setIsLoginOpen } = useModal(); // Use context for login modal state
 
   const navigate = useNavigate();
@@ -23,20 +30,22 @@ const VerifyEmail = ({ email }) => {
         code,
       });
 
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify({
-        username: res.data.username,
-        email: res.data.email,
-      }));
+      // localStorage.setItem('token', res.data.token);
+      
 
-      setUser({ username: res.data.username, email: res.data.email });
-
+      dispatch(setUser({ username: res.data.username, email: res.data.email }));
+      
       setVerified(true);
-      // setMessage("✅ Email verified successfully! Redirecting...");
+      setMessage("✅ Email verified successfully! Redirecting to dashboard...");
       setIsLoginOpen(false);
-      setTimeout(() => navigate('/dashboard'), 1500);
+      // setTimeout(() => navigate('/dashboard'), 1500);
+      navigate('/dashboard');
+      setLoading(false);
+      toast.success("Email verified successfully!");
     } catch (err) {
       setMessage(err.response?.data?.msg || "❌ Verification failed.");
+      setLoading(false);
+      toast.error("Verification failed.");
     }
   };
 

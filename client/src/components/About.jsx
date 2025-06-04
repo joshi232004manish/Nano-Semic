@@ -7,6 +7,9 @@ import meg from "../assets/meg.jpg";
 import sir3 from "../assets/sir3.jpg";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useLoad } from "../context/loading";
+import { use } from "react";
+import { useEffect } from "react";
 
 const fadeIn = (direction = "up", delay = 0) => ({
   hidden: {
@@ -36,13 +39,19 @@ const Section = ({ children, direction = "up", delay = 0 }) => (
 );
 
 const GradientImage = ({ src, alt }) => (
-  <div className="relative w-full overflow-hidden rounded-lg shadow-lg">
-    <img src={src} alt={alt} className="object-cover w-full h-auto" />
-    <div className="absolute inset-0 " />
+  <div className="relative w-full  overflow-hidden rounded-lg shadow-lg">
+    <img src={src} alt={alt} className="object-cover  w-full h-auto" />
+    {/* <div className="absolute inset-0 " /> */}
+    <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/40 to-[#000000]/40" />
   </div>
 );
 
 const About = () => {
+  const {loading, setLoading} = useLoad();
+  useEffect(() => {
+    setLoading(true);
+  } , []);
+
   return (
     <div className=" relative  text-white font-sans">
       <div className="absolute inset-0 -z-10">
@@ -52,6 +61,7 @@ const About = () => {
           muted
           playsInline
           className="w-full h-full object-cover"
+          onCanPlayThrough={() => setLoading(false)}
         >
           <source src="/video2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -87,18 +97,25 @@ const About = () => {
           <div>
             <h2 className="text-4xl font-bold mb-6">Our Company</h2>
             <p className="text-lg text-gray-300">
-              Nano Semic Pvt. Ltd. was founded in 2024 and is presently
-              incubated with IIT Bhubaneswar Research and Entrepreneurship Park.
-              We are a semiconductor products and services company.
+             Nano Semic Pvt. Ltd. was founded in 2024 and is presently incubated with IIT Bhubaneswar Research and Entrepreneurship Park. We are a semiconductor products and services company. We offer a range of solutions starting from consumer sensors, sensor components, workforce training programs for industries, universities and schools and semiconductor technology development consultancy services.
             </p>
-            <ul className="list-disc pl-5 mt-4 space-y-2 text-lg text-gray-300">
+            {/* <ul className="list-disc pl-5 mt-4 space-y-2 text-lg text-gray-300">
               <li>Gas and water sensing in industries and homes.</li>
               <li>Healthcare diagnosis via non-invasive techniques.</li>
               <li>Educational and research tools for universities/schools.</li>
-            </ul>
+            </ul> */}
           </div>
           <div>
-            <GradientImage src="/nanosemic.png" alt="Company" />
+            {/* <GradientImage src="/nanosemic5.png" alt="Company" /> */}
+            <div className="relative w-full  overflow-hidden rounded-lg shadow-lg">
+              <img
+                src="/nanosemic7.png"
+                alt={"Company Image"}
+                className="object-cover  w-full h-auto"
+              />
+              {/* <div className="absolute inset-0 " /> */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/20 to-[#000000]/20" />
+            </div>
           </div>
         </div>
       </Section>
@@ -151,16 +168,17 @@ const About = () => {
             {
               name: "Dr. Sayan Dey",
               title: "Director",
+              linkedin: "https://www.linkedin.com/in/sayandey?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
               image: sir2,
-              bio: "Dr. Sayan received his B.Tech from WBUT, M.Tech from Jadavpur University, and Ph.D. from IIT Kharagpur. Fulbright-Nehru Fellow at Columbia University. Assistant Professor at IIT Bhubaneswar.",
+              bio: "Dr. Sayan received his B.Tech degree in ECE from WBUT, M.Tech from Jadavpur University and Ph.D. from IIT Kharagpur in 2020. Thereafter, he worked as a Fulbright-Nehru Fellow in Columbia University, USA till 2022. He received National Awards for best dissertations twice in 2015 and 2020 and the prestigious Fulbright Fellowship in 2021. He is currently an Assistant Professor in the Department of Electronics and Communication Engineering, School of Electrical and Computer Sciences at IIT Bhubaneswar and also one of the Directors of Nano Semic Pvt. Ltd.",
             },
             {
-              name: "Dr. Akashay K",
+              name: "Dr. Akshay K",
               title: "Director",
+              linkedin: "https://www.linkedin.com/in/akshay-k-ak-8129066062/?originalSubdomain=in",
               image: akashay,
-              bio: "Dr. Akashay received his B.Tech from NIT Calicut, and MS+PhD from IIT Madras. Former Senior Engineer at Micron. Assistant Professor at IIT Bhubaneswar.",
+              bio: "Dr. Akshay received the B.Tech. degree in ECE from NIT Calicut and MS and PhD degrees from IIT Madras as a Prime Minister's Research Fellow in 2022. He worked as a Senior Semiconductor Device Engineer in the Technology Development Group at Micron Technology till 2023. He is currently an Assistant Professor in the Department of Electronics and Communication Engineering, School of Electrical and Computer Sciences at IIT Bhubaneswar and also one of the Directors of Nano Semic Pvt. Ltd. ",
             },
-            
           ].map((member, i) => (
             <Section direction={i % 2 === 0 ? "up" : "down"} key={member.name}>
               <div className="bg-black/60 text-white lg:w-[400px]  rounded-xl overflow-hidden backdrop-blur-md border border-white/10 shadow-xl transform transition-transform duration-500  hover:scale-105 hover:border-white/30 hover:shadow-[0_0_20px_#ffffff22] ">
@@ -176,14 +194,20 @@ const About = () => {
                   <p className="text-md text-gray-300">{member.title}</p>
                   <p className="text-sm text-gray-400 mt-2">{member.bio}</p>
                   <div className="flex gap-4 mt-4">
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-400 transition-colors"  > 
                     <FaLinkedinIn
                       size={20}
                       className="hover:text-blue-400 transition-colors"
-                    />
-                    <FaXTwitter
+                    />  
+                    </a>  
+                    {/* <FaXTwitter
                       size={20}
                       className="hover:text-white transition-colors"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

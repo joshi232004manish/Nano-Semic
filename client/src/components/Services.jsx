@@ -14,7 +14,7 @@ function Services() {
     <>
       {/* Services Header */}
       <div
-        className="relative bg-cover bg-center h-[400px]"
+        className="relative bg-cover bg-center h-[440px]"
         style={{ backgroundImage: `url('/services.jpg')` }}
       >
         {/* Overlay for darkening background */}
@@ -25,13 +25,13 @@ function Services() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1,delay: 0.5, ease: "easeOut" }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
             className="relative z-10 text-center max-w-3xl"
           >
-            <h2 className="text-4xl text-white md:text-5xl font-extrabold leading-tight mb-4">
-              Advanced Solutions for the Next Generation
+            <h2 className="text-5xl text-white md:text-[56px] font-extrabold leading-tight mb-4">
+              Solutions Designed for Your Success
             </h2>
-            <p className="text-lg text-gray-300 mb-3 leading-relaxed">
+            <p className="text-[20px] text-gray-300 mb-3 leading-relaxed">
               We specialize in delivering comprehensive solutions across the
               semiconductor development lifecycle. From advanced device design
               and simulation to precision modeling and technical consulting, our
@@ -44,6 +44,48 @@ function Services() {
           </motion.div>
         </div>
       </div>
+
+      <section className="bg-white py-10 sm:py-16">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            <div>
+              <img
+                src="training.jpg"
+                alt="Simulation and Modeling"
+                className="rounded-lg shadow-md w-full"
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                Semiconductor Workforce Training
+              </h2>
+              <p className="mt-6 text-lg text-gray-600">
+                We offer carefully curated short-term and long-term courses and hands on training for employees, freshers, and students looking for upskilling themselves to be ready for the rapidly evolving semiconductor technology ecosystem.  Further, we offer to conduct technical workshops (for companies), faculty development programs ( for engineering colleges and universities), and summer/winter camps (for schools). Our goal is to bridge industry-academia knowledge through tailored training programs.
+              </p>
+              <div className="mt-6">
+                <a
+                  href="/Contact"
+                  className="inline-block bg-indigo-600 text-white px-5 py-3 rounded-md hover:bg-indigo-500 text-sm font-semibold"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Section 1: Power Devices */}
       <section className="bg-white py-10 sm:py-16">
@@ -147,10 +189,12 @@ function Services() {
                 Technical Consulting
               </h2>
               <p className="mt-6 text-lg text-gray-600">
-                We provide consulting in semiconductor technology, workforce
-                training, technical workshops, faculty development, and
-                summer/winter camps for students. Our goal is to bridge academic
-                and industry knowledge through tailored training and programs.
+                We specialize in delivering comprehensive solutions pertaining
+                to semiconductor technology and workforce development. Our
+                services range from conducting customised skill training
+                programs for semiconductor technology workforce development to
+                offering advanced device design, simulation, and modeling
+                support for your semiconductor device research and development.
               </p>
               <div className="mt-6">
                 <a

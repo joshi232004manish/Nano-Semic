@@ -1,24 +1,21 @@
-// src/firebase.js
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // For saving user data
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-import { GoogleAuthProvider } from "firebase/auth";
-
-
-
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA-wjtyhjCfU_4meqoOH5F2E42d_yoG8oI",
-    authDomain: "nanosemic.firebaseapp.com",
-    projectId: "nanosemic",
-    storageBucket: "nanosemic.firebasestorage.app",
-    messagingSenderId: "556253008950",
-    appId: "1:556253008950:web:b0baccca3b2d31a5147497",
-    measurementId: "G-28FZW74X0B"
-  };
-  
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: "nanosemic-8c9f3.firebaseapp.com",
+  projectId: "nanosemic-8c9f3",
+  storageBucket: "nanosemic-8c9f3.firebasestorage.app",
+  messagingSenderId: "809538966068",
+  appId: "1:809538966068:web:7e0dca0f0f62142593f061"
+};
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const googleProvider = new GoogleAuthProvider();
+export const auth = getAuth(app);

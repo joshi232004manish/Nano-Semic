@@ -2,19 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { UserProvider } from "./components/UserContext"; // adjust path
+import { UserProvider } from "./context/UserContext.jsx"; // adjust path
 import { ModalProvider } from "./context/loginBox.jsx"; // adjust path
 import { BrowserRouter } from "react-router-dom";
-import BottomCartPopup from './components/BottomCartPopup.jsx';
-ReactDOM.createRoot(document.getElementById("root")).render(
-  
-  <BrowserRouter>
-   
-    <ModalProvider>
-      <App />
-    </ModalProvider>
+import { LoadProvider } from "./context/loading.jsx"; // adjust path
 
-   
-  </BrowserRouter>
- 
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./redux/store.js"; // adjust path
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <UserProvider>
+          <LoadProvider>
+            <ModalProvider>
+              <App />
+            </ModalProvider>
+          </LoadProvider>
+        </UserProvider>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
 );

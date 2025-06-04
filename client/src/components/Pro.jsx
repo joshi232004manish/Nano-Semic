@@ -3,9 +3,11 @@ import ai from "../assets/ai.jpg";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLoad } from "../context/loading";
 
 const Pro = () => {
   const [products, setProducts] = useState([]);
+  const {loading,setLoading} = useLoad();
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -15,13 +17,17 @@ const Pro = () => {
     },
   };
 
+
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           "http://localhost:3000/api/product/get"
         );
         setProducts(response.data);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching listing:", error);
       }
@@ -55,13 +61,13 @@ const Pro = () => {
             Pioneering Products for the Next Era
           </h2>
           <p className="text-lg text-gray-300 mb-3 leading-relaxed">
-            Explore our curated selection of high-precision raw materials and
+            Explore our portfolio of high-precision raw materials and
             intelligent sensor systems. Whether you're building, innovating, or
-            scaling, our components ensure real-world performance and unmatched
+            scaling, our products ensure real-world performance and unmatched
             reliability.
           </p>
           <p className="text-gray-400 text-md">
-            Trusted by researchers, engineers, and makers across the globe.
+            Trusted by researchers, engineers, and consumers.
           </p>
         </motion.div>
       </section>
@@ -79,7 +85,7 @@ const Pro = () => {
             What Sets Our Products Apart?
           </h3>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Every product in our lineup is carefully curated and quality-tested.
+            Every product in our lineup is  quality-tested.
             We believe in providing durable, efficient, and high-performing
             components that empower your tech stack, whether you're prototyping
             or scaling production.

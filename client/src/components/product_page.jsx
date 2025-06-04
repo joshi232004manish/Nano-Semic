@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { useState } from "react";
 import { useEffect } from "react";
@@ -9,16 +9,14 @@ import { useParams } from "react-router-dom";
 //import "swiper/css";
 //import "swiper/css/navigation";
 import axios from "axios";
+import { useLoad } from "../context/loading";
 
 const ProductPage = () => {
   const params = useParams();
   const [selectedImage, setSelectedImage] = useState(null);
   const [listing, setListing] = useState(null);
-
-  const [queryEmail, setQueryEmail] = useState('');
-  const [queryMessage, setQueryMessage] = useState('');
-  const [queryStatus, setQueryStatus] = useState('');
-  const [queryLoading, setQueryLoading] = useState(false);
+  const {loading,setLoading} = useLoad();
+  
   const [quantity, setQuantity] = useState(1);
 
   const { id } = useParams();
@@ -27,14 +25,17 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        console.log("Fetching listing for ID:", id);
-        console.log("Fetching listing for ID:", id);
+        // console.log("Fetching listing for ID:", id);
+        // console.log("Fetching listing for ID:", id);
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:3000/api/product/get/${id}`
 
         );
-        setListing(response.data); // ✅ Axios response data
-        console.log(response.data);
+
+        setListing(response.data); //  Axios response data
+        // console.log(response.data);
+        setLoading(false);
         // setSelectedImage(listing.imageUrls[0]);
       } catch (error) {
         console.error("Error fetching listing:", error);
@@ -87,25 +88,7 @@ const ProductPage = () => {
     setMagnifierStyle({ display: "none" });
   };
 
-  const handleQuerySubmit = async (e) => {
-    e.preventDefault();
-    setQueryStatus('');
-    setQueryLoading(true);
-    try {
-      const res = await axios.post('http://localhost:3000/api/auth/query', {
-        email: queryEmail,
-        message: queryMessage,
-      });
-
-      setQueryStatus('Query submitted successfully!');
-      setQueryEmail('');
-      setQueryMessage('');
-    } catch (error) {
-      setQueryStatus('Failed to send query. Try again.');
-    } finally {
-      setQueryLoading(false);
-    }
-  };
+  
   // Handle Add to Cart functionality
   const handleAddToCart = async () => {
     // If getting from localStorage
@@ -282,51 +265,12 @@ const ProductPage = () => {
         {/* Product Query Form */}
         <div className="mt-12 border-t pt-8">
           <h3 className="text-xl font-bold mb-4">Have a question about this product?</h3>
-          <form className="space-y-4 max-w-xl" onSubmit={handleQuerySubmit}>
-            <div>
-              <label htmlFor="email" className="block font-medium text-gray-700">
-                Your Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={queryEmail}
-                onChange={(e) => setQueryEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block font-medium text-gray-700">
-                Your Question
-              </label>
-              <textarea
-                id="message"
-                value={queryMessage}
-                onChange={(e) => setQueryMessage(e.target.value)}
-                rows="4"
-                placeholder="Ask your question about this product..."
-                required
-                className="w-full mt-1 px-4 py-2 border rounded shadow-sm focus:ring focus:ring-purple-300"
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              disabled={queryLoading}
-              className={`bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition ${queryLoading ? 'opacity-50' : ''}`}
-            >
-              {queryLoading ? 'Sending...' : 'Submit Query'}
-            </button>
-
-            {queryStatus && (
-              <div className={`mt-4 ${queryStatus.includes('success') ? 'text-green-600' : 'text-red-500'}`}>
-                {queryStatus}
-              </div>
-            )}
-          </form>
+          <a
+                  href="/Contact"
+                  className="inline-block bg-indigo-600 text-white px-5 py-3 rounded-md hover:bg-indigo-500 text-sm font-semibold"
+                >
+                  Contact Us
+                </a>
         </div>
 
 

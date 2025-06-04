@@ -21,9 +21,9 @@ const AnimatedCartIcon = () => {
       title="Go to Cart"
     >
       <img
-        src="../public/cart.png"  // adjust path if needed
+        src="/cart.png"  // adjust path if needed
         alt="Cart"
-        style={{ width: 60, height: 60 }}
+        style={{ width: 45, height: 45 }}
       />
     </motion.div>
   );

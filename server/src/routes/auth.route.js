@@ -5,43 +5,37 @@ import  sendEmail  from '../utils/sendEmail.js';
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-router.post('/google-signup', async (req, res) => {
-  const { idToken } = req.body;
+// router.post('/google-signup', async (req, res) => {
+//   const { idToken } = req.body;
 
-  try {
-    // Verify the token with Firebase Admin
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    const email = decodedToken.email;
+//   try {
+//     // Verify the token with Firebase Admin
+//     const decodedToken = await admin.auth().verifyIdToken(idToken);
+//     const email = decodedToken.email;
 
-    console.log(`Verified user: ${email}`);
+//     console.log(`Verified user: ${email}`);
 
-    // Send welcome email via Brevo
-    await sendEmail(
-      email,
-      'Welcome to Our App!',
-      `<h1>Hi ${email}!</h1><p>Thanks for signing up with Google.</p>`
-    );
+//     // Send welcome email via Brevo
+//     await sendEmail(
+//       email,
+//       'Welcome to Our App!',
+//       `<h1>Hi ${email}!</h1><p>Thanks for signing up with Google.</p>`
+//     );
 
-    res.status(200).json({ message: 'Google signup successful and email sent.' });
-  } catch (error) {
-    console.error('Google signup error:', error);
-    res.status(401).json({ error: 'Invalid token or email sending failed.' });
-  }
-});
+//     res.status(200).json({ message: 'Google signup successful and email sent.' });
+//   } catch (error) {
+//     console.error('Google signup error:', error);
+//     res.status(401).json({ error: 'Invalid token or email sending failed.' });
+//   }
+// });
 
 
-router.post("/signin", async (req, res) => {
-  // Note: Firebase Admin SDK does not support email/password login validation.
-  // Typically handled in frontend using Firebase Client SDK.
 
-  return res.status(400).json({
-    error: "Use Firebase client SDK for login and then verify the token here if needed."
-  });
-});
 
-//services
+
 router.post('/contact', async (req, res) => {
   const { name, email, rating, message } = req.body;
   const transporter = nodemailer.createTransport({

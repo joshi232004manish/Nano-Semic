@@ -3,8 +3,10 @@ import Admin from "../models/admin.model.js";
 import Order from "../models/order.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Contact from "../models/contact.model.js";
 import crypto from "crypto";
 import sendEmailWithCode from "../utils/sendEmail.js";
+import path from "path";
 
 let pendingUsers = {}; // Temporary store for demo (NOT FOR PROD)
 
@@ -81,12 +83,35 @@ const verifyEmail = async (req, res) => {
     }
   );
 
-  res.status(200).json({
+  res.cookie("access_token", token, { httpOnly: true }).status(200).json({
     message: "Email verified successfully.",
-    token,
+
     username: newUser.username,
     email: newUser.email,
   });
+};
+
+const logOut = async (req, res) => {
+  try {
+    // res.cookie("access_token", "", {
+    //   httpOnly: true,
+    //   expires: new Date(0), // Expire immediately
+    //   sameSite: "Lax", // Match original cookie options
+    //   secure: false, // Or true if you're using HTTPS
+    //   path: "/", // Match original cookie path
+    // });
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      path: "/",
+      sameSite: "Lax",
+      secure: false, // Set to true if using HTTPS
+    })
+
+    res.status(200).json("You have been successfully logged out");
+  } catch (error) {
+    // next(error);
+    console.log("Error during logout:", error);
+  }
 };
 
 const login = async (req, res) => {
@@ -98,44 +123,85 @@ const login = async (req, res) => {
   const isMatch = await bcrypt.compare(password, admin.password);
   if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-  const token = jwt.sign({ admin: { id: admin.id } }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ admin: { id: admin._id } }, process.env.JWT_SECRET, {
     expiresIn: "3d",
   });
-  res.json({ email: admin.email, token, username: admin.username});
+  res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Lax",
+      path: "/",
+    })
+    .status(201)
+    .json({ email: admin.email, username: admin.username });
 };
-// Save Firebase user to MongoDB
 
-export const saveFirebaseUser = async (req, res) => {
-  const { uid, email } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" });
+const saveContact = async (req, res) => {
+  const { email, name, mobile, message } = req.body;
+  try {
+    const newContact = new Contact({
+      email,name,mobile,message
+    })
+    await newContact.save();
+    res.status(201).json("Contact saved successfully");
+    
+  } catch (error) {
+    console.log("Error saving contact:", error);
+    res.status(401).json("Error saving contact");
+    
   }
 
-  try {
-    let user = await Admin.findOne({ email });
+}
 
-    if (!user) {
-      user = new Admin({ uid, email, isVerified: true });
-      await user.save();
+const google = async (req, res) => {
+  // res.json({message:"Google Auth not implemented in this version"});
+  try {
+    const validUser = await Admin.findOne({ email: req.body.email });
+    if (validUser) {
+      const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+      console.log(validUser._doc);
+      const { password: pass, ...rest } = validUser._doc;
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(201)
+        .json(rest);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
+      const newUser = new Admin({
+        username:
+          req.body.name.split(" ").join("").toLowerCase() +
+          Math.random().toString(36).slice(-4),
+        email: req.body.email,
+        password: hashedPassword,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+    expiresIn: "3d",
+  });
+
+      const { password: pass, ...rest } = newUser._doc;
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(201)
+        .json(rest);
     }
-    const token = jwt.sign({ admin: { id: user.id } }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
-    });
-    res.status(200).json({ message: "User saved to MongoDB", user,token });
-  } catch (err) {
-    console.error("Error saving user:", err);
-    res.status(500).json({ message: "MongoDB Save Failed" });
+  } catch (error) {
+    // next(error);
+    console.error("Google authentication error:", error);
   }
 };
 
 const profile = async (req, res) => {
   try {
-    const user = await Admin.findById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ message: "Admin not found" });
-    }
-    res.json(user);
+    // const user = await Admin.findById(req.user.id);
+    // if (!user) {
+    //   return res.status(404).json({ message: "Admin not found" });
+    // }
+    // res.json(user);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
@@ -159,11 +225,15 @@ const getOrderStats = async (req, res) => {
   res.json(stats);
 };
 export default {
+  
   signup,
   verifyEmail,
   login,
   profile,
   getOrders,
+  logOut,
   updateOrderStatus,
   getOrderStats,
+  google,
+  saveContact,
 };

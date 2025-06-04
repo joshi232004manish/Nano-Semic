@@ -1,99 +1,110 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { signInWithGoogle } from "../components/Auth"; // assumes you already have this
+import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
-import VerifyEmail from "./VerifyEmail"; // New verify component
-// import { useModal } from '../ModalContext';
-import { useModal } from "../context/loginBox"; // Adjust the import path as needed
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, clearUser } from '../redux/user/userSlice';
+import VerifyEmail from "./VerifyEmail"; 
+import { useModal } from "../context/loginBox"; 
+import { useLoad } from "../context/loading";
+import { toast } from "react-toastify";
+import OAuth from "./OAuth";
 
-// import { useUser } from "./UserContext";
+
 
 const LoginModal = ({isOpen}) => {
+  const dispatch = useDispatch();
+  const {user} = useSelector((state) => state.user);
   const { setIsLoginOpen } = useModal();
-
   const [status, setStatus] = useState("signup");
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const {loading, setLoading,error,setError} = useLoad(); 
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
     password: "",
   });
-
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
-  // const { user, setUser } = useUser();
   const navigate = useNavigate();
 
   if (!isOpen) return null;
 
-  const handleChange = (e) => {
+  const handleLoginChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+    
     try {
       const response = await axios.post(
         "http://localhost:3000/api/admin/login",
         {
           email: formData.email,
           password: formData.password,
-        }
+        },{withCredentials: true}
       );
       // alert(`welcome Back 🥳, ${response.data.username}`);
-      localStorage.setItem("token", response.data.token);
+      dispatch(setUser({ username: response.data.username, email: response.data.email }));
+       toast.success("Successfully loggin in!");
+      // localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
       setIsLoginOpen(false);
     } catch (err) {
       setError("Invalid email or password.");
+      toast.error("Login failed. Please check your credentials.");
+
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoogleSignin = async () => {
-    setError("");
-    setLoading(true);
-    try {
-      const user = await signInWithGoogle();
-      // alert(`Welcome, ${user.displayName || user.email}!`);
-      navigate("/dashboard");
-      setIsLoginOpen(false);
-    } catch (err) {
-      console.error(err);
-      setError("Google Sign-in failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleGoogleSignin = async () => {
+  //   setError("");
+  //   setLoading(true);
+  //   try {
+  //     const User = await signInWithGoogle();
+  //     // alert(`Welcome, ${user.displayName || user.email}!`);
+  //     console.log(User);
+  //     // const idToken = await User.getIdToken();
+  //     console.log(User.displayName)
+  //     dispatch(setUser({ username: User.displayName , email: User.email }));
+  //     navigate("/dashboard");
+  //     setIsLoginOpen(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Google Sign-in failed.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleRegisterChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const handleGoogleSignup = async () => {
-    try {
-      const user = await signInWithGoogle();
-      const idToken = await user.getIdToken();
-      await fetch("http://localhost:3000/api/auth/google-signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken }),
-      });
-      // alert(`Welcome, ${user.displayName || user.email}!`);
-      navigate("/dashboard");
-      setIsLoginOpen(false);
-    } catch (err) {
-      console.error(err);
-      setError("Google Sign-in failed.");
-    }
-  };
+  // const handleGoogleSignup = async () => {
+  //   try {
+  //     const user = await signInWithGoogle();
+  //     const idToken = await user.getIdToken();
+  //     await fetch("http://localhost:3000/api/auth/google-signup", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ idToken }),
+  //     });
+  //     // alert(`Welcome, ${user.displayName || user.email}!`);
+  //     navigate("/dashboard");
+  //     // dispatch(setUser({ username: User.displayName , email: User.email }));
+  //     setIsLoginOpen(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Google Sign-in failed.");
+  //   }
+  // };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -104,7 +115,9 @@ const LoginModal = ({isOpen}) => {
         username: registerData.username,
         email: registerData.email,
         password: registerData.password,
-      });
+      },{
+  withCredentials: true
+});
       // alert("Verification code sent to your email.");
       setEmail(registerData.email);
       setStep(2);
@@ -118,6 +131,7 @@ const LoginModal = ({isOpen}) => {
     }
   };
 
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
@@ -127,10 +141,7 @@ const LoginModal = ({isOpen}) => {
         className="flex flex-col md:flex-row  bg-gradient-to-br from-slate-800 to-slate-900 text-black dark:bg-[#0F172A] dark:text-white rounded-l-lg shadow-lg overflow-hidden max-w-4xl w-full mx-4"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Image Section */}
-        {/* <div className="hidden md:block w-1/2 bg-cover bg-center"
-             style={{ backgroundImage: `url('https://images.unsplash.com/photo-1557683316-973673baf926')` }}
-        ></div> */}
+        
         <div className="relative hidden md:flex flex-col justify-center items-center bg-dark-blue w-1/2 rounded-l-lg overflow-hidden">
           <img
             src="nanosemic3.png"
@@ -159,7 +170,7 @@ const LoginModal = ({isOpen}) => {
                   {error}
                 </div>
               )}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleLoginSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium">
                     Email
@@ -170,7 +181,7 @@ const LoginModal = ({isOpen}) => {
                     name="email"
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={handleLoginChange}
                     required
                   />
                 </div>
@@ -187,7 +198,7 @@ const LoginModal = ({isOpen}) => {
                     name="password"
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={handleLoginChange}
                     required
                   />
                 </div>
@@ -200,13 +211,7 @@ const LoginModal = ({isOpen}) => {
                 </button>
               </form>
               <div className="my-4 text-center text-sm text-gray-500">OR</div>
-              <button
-                onClick={handleGoogleSignin}
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition"
-                disabled={loading}
-              >
-                Continue with Google
-              </button>
+              <OAuth/>
               <p className="mt-6 text-center text-sm">
                 Don't have an account?{" "}
                 <span
@@ -300,12 +305,7 @@ const LoginModal = ({isOpen}) => {
                       Sign in
                     </span>
                   </p>
-                  <button
-                    onClick={handleGoogleSignup}
-                    className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition"
-                  >
-                    Continue with Google
-                  </button>
+                  <OAuth/>
                 </>
               ) : (
                 <VerifyEmail email={email} />
