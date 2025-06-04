@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 const cartSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Admin',
     required: true,
     unique: true // One cart per user
   },

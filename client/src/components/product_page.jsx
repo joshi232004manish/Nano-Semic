@@ -107,7 +107,7 @@ const ProductPage = () => {
         productId: listing._id,
         quantity,
       });
-      alert("Added to cart!");
+      //alert("Added to cart!");
        // Notify popup immediately
   window.dispatchEvent(new CustomEvent('cartUpdated'));
     } catch (error) {

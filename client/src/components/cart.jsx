@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
-
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchCart();
   }, []);
@@ -105,112 +105,123 @@ const Cart = () => {
   };
 
   return (
-     <div className="min-h-screen flex flex-col bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100">
-    <div className="max-w-4xl mx-auto p-8 flex-grow rounded-lg shadow-lg flex flex-col">
-      <AnimatePresence>
-        {cartItems.length === 0 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-xl text-indigo-600 font-semibold"
-          >
-            Your cart is empty!
-          </motion.p>
-        )}
-      </AnimatePresence>
-
-      <div className="space-y-6">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100">
+      <div className="max-w-4xl mx-auto p-8 flex-grow rounded-lg shadow-lg flex flex-col">
         <AnimatePresence>
-          {cartItems.map((item) => {
-            const price = item.product?.price || 0;
-            const discount = item.product?.discount || 0;
-            const discountedPrice = price * (1 - discount / 100);
-            return (
-              <motion.div
-                key={item.product._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6"
-              >
-                <div>
-                  <h3 className="font-bold text-2xl text-indigo-900">
-                    {item.product?.title || "Unknown Product"}
-                  </h3>
-                  <p className="text-indigo-600 mt-1 text-sm font-medium">
-                    Product ID: {item.product?._id}
-                  </p>
-                  <p className="mt-2 font-semibold text-lg text-purple-700">
-                    Price:{" "}
-                    <span className="line-through text-red-400 mr-2">
-                      ₹{price.toFixed(2)}
-                    </span>
-                    <span>₹{discountedPrice.toFixed(2)}</span>
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 mt-4 md:mt-0">
-                  <button
-                    onClick={() =>
-                      item.quantity > 1 &&
-                      handleUpdateQuantity(item.product._id, item.quantity - 1)
-                    }
-                    className="p-3 bg-indigo-100 rounded-full hover:bg-indigo-200 transition shadow"
-                    aria-label="Decrease quantity"
-                  >
-                    <FiMinus size={18} className="text-indigo-600" />
-                  </button>
-
-                  <motion.span
-                    key={item.quantity}
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="text-2xl font-semibold text-indigo-900 min-w-[40px] text-center"
-                  >
-                    {item.quantity}
-                  </motion.span>
-
-                  <button
-                    onClick={() =>
-                      handleUpdateQuantity(item.product._id, item.quantity + 1)
-                    }
-                    className="p-3 bg-indigo-100 rounded-full hover:bg-indigo-200 transition shadow"
-                    aria-label="Increase quantity"
-                  >
-                    <FiPlus size={18} className="text-indigo-600" />
-                  </button>
-
-                  <button
-                    onClick={() => handleRemoveItem(item.product._id)}
-                    className="p-3 ml-4 bg-red-500 rounded-full hover:bg-red-600 transition shadow text-white"
-                    aria-label="Remove item"
-                  >
-                    <FiTrash2 size={18} />
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+          {cartItems.length === 0 && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center text-xl text-indigo-600 font-semibold"
+            >
+              Your cart is empty!
+            </motion.p>
+          )}
         </AnimatePresence>
+
+        <div className="space-y-6">
+          <AnimatePresence>
+            {cartItems.map((item) => {
+              const price = item.product?.price || 0;
+              const discount = item.product?.discount || 0;
+              const discountedPrice = price * (1 - discount / 100);
+              return (
+                <motion.div
+                  key={item.product._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6"
+                >
+                  <div>
+                    <h3 className="font-bold text-2xl text-indigo-900">
+                      {item.product?.title || "Unknown Product"}
+                    </h3>
+                    <p className="text-indigo-600 mt-1 text-sm font-medium">
+                      Product ID: {item.product?._id}
+                    </p>
+                    <p className="mt-2 font-semibold text-lg text-purple-700">
+                      Price:{" "}
+                      <span className="line-through text-red-400 mr-2">
+                        ₹{price.toFixed(2)}
+                      </span>
+                      <span>₹{discountedPrice.toFixed(2)}</span>
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3 mt-4 md:mt-0">
+                    <button
+                      onClick={() =>
+                        item.quantity > 1 &&
+                        handleUpdateQuantity(item.product._id, item.quantity - 1)
+                      }
+                      className="p-3 bg-indigo-100 rounded-full hover:bg-indigo-200 transition shadow"
+                      aria-label="Decrease quantity"
+                    >
+                      <FiMinus size={18} className="text-indigo-600" />
+                    </button>
+
+                    <motion.span
+                      key={item.quantity}
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="text-2xl font-semibold text-indigo-900 min-w-[40px] text-center"
+                    >
+                      {item.quantity}
+                    </motion.span>
+
+                    <button
+                      onClick={() =>
+                        handleUpdateQuantity(item.product._id, item.quantity + 1)
+                      }
+                      className="p-3 bg-indigo-100 rounded-full hover:bg-indigo-200 transition shadow"
+                      aria-label="Increase quantity"
+                    >
+                      <FiPlus size={18} className="text-indigo-600" />
+                    </button>
+
+                    <button
+                      onClick={() => handleRemoveItem(item.product._id)}
+                      className="p-3 ml-4 bg-red-500 rounded-full hover:bg-red-600 transition shadow text-white"
+                      aria-label="Remove item"
+                    >
+                      <FiTrash2 size={18} />
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {cartItems.length > 0 && (
+          <>
+            <div className="mt-8 text-right font-extrabold text-2xl text-indigo-900">
+              Subtotal: ₹{calculateSubtotal().toFixed(2)}
+            </div>
+
+            {/* Buttons aligned horizontally */}
+            <div className="mt-6 flex flex-col md:flex-row gap-4 justify-between">
+              <button
+                onClick={handleClearCart}
+                className="w-full md:w-1/2 bg-gradient-to-r from-red-600 to-red-700 text-white font-extrabold text-xl py-4 rounded-lg shadow-lg hover:from-red-700 hover:to-red-800 transition"
+              >
+                Clear Cart
+              </button>
+
+              <button
+                onClick={() => navigate("/address")}
+                className="w-full md:w-1/2 bg-gradient-to-r from-green-500 to-green-600 text-white font-extrabold text-xl py-4 rounded-lg shadow-lg hover:from-green-600 hover:to-green-700 transition"
+              >
+                Place Order
+              </button>
+            </div>
+          </>
+        )}
+
       </div>
-
-      {cartItems.length > 0 && (
-        <>
-          <div className="mt-8 text-right font-extrabold text-2xl text-indigo-900">
-            Subtotal: ₹{calculateSubtotal().toFixed(2)}
-          </div>
-
-          <button
-            onClick={handleClearCart}
-            className="mt-6 w-full md:w-1/3 mx-auto block bg-gradient-to-r from-red-600 to-red-700 text-white font-extrabold text-xl py-4 rounded-lg shadow-lg hover:from-red-700 hover:to-red-800 transition"
-          >
-            Clear Cart
-          </button>
-        </>
-      )}
-    </div>
     </div>
   );
 };

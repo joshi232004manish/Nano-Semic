@@ -189,6 +189,7 @@ const About = () => {
                     className="w-full h-full object-contain "
                   />
                 </div>
+
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">{member.name}</h3>
                   <p className="text-md text-gray-300">{member.title}</p>
