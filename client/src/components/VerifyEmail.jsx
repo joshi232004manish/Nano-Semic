@@ -9,7 +9,7 @@ import { useLoad } from "../context/loading";
 import { toast } from "react-toastify";
 
  // Use context for loading state
-const VerifyEmail = ({ email }) => {
+const VerifyEmail = ({ email,password,username }) => {
   const {loading,setLoading} = useLoad();
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
@@ -25,10 +25,14 @@ const VerifyEmail = ({ email }) => {
     e.preventDefault();
     setMessage("");
     try {
+
+
       const res = await axios.post("http://localhost:3000/api/admin/verify-email", {
         email,
         code,
-      });
+        password,
+        username,
+      },{ withCredentials:true });
 
       // localStorage.setItem('token', res.data.token);
       

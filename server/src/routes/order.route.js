@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyAccessToken from '../middlewares/auth.js';
 import {
   placeorder,
   getMyOrders,
@@ -9,8 +10,8 @@ import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
-router.post('/place',auth,placeorder);
-router.get('/my-orders',auth, getMyOrders);
+router.post('/place',verifyAccessToken,placeorder);
+router.get('/my-orders',verifyAccessToken, getMyOrders);
 
 /*router.post('/create', createOrder);
 router.get('/get', getAllOrders);

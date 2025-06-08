@@ -1,11 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { UserProvider } from "./context/UserContext.jsx"; // adjust path
-import { ModalProvider } from "./context/loginBox.jsx"; // adjust path
+import { UserProvider } from "./context/UserContext.jsx"; 
+import { ModalProvider } from "./context/loginBox.jsx"; 
 import { BrowserRouter } from "react-router-dom";
-import { LoadProvider } from "./context/loading.jsx"; // adjust path
+import { LoadProvider } from "./context/loading.jsx"; 
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";

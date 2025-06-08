@@ -10,9 +10,10 @@ const getDiscountedPrice = (product) => {
 
 export const addToCart = async (req, res) => {
   try {
-    const { useremail, productId, quantity } = req.body;
-
-    const userId = await Admin.findOne({ email: useremail }).select('_id');
+    const {  productId, quantity } = req.body;
+    const parsedQuantity = parseInt(quantity);
+    console.log(req.user)
+    const userId = req.user;
     const product = await Product.findById(productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
@@ -21,18 +22,18 @@ export const addToCart = async (req, res) => {
     if (!cart) {
       cart = new Cart({
         user: userId,
-        products: [{ product: productId, quantity }],
-        totalPrice: getDiscountedPrice(product) * quantity,
+        products: [{ product: productId,quantity: parsedQuantity }],
+        totalPrice: getDiscountedPrice(product) * parsedQuantity,
       });
     } else {
       const existingProduct = cart.products.find(
         (item) => item.product.toString() === productId
       );
-
+      
       if (existingProduct) {
-        existingProduct.quantity += quantity;
+        existingProduct.quantity += parsedQuantity;
       } else {
-        cart.products.push({ product: productId, quantity });
+        cart.products.push({ product: productId, quantity: parsedQuantity });
       }
 
       // Recalculate totalPrice using discounted prices
@@ -58,9 +59,10 @@ export const addToCart = async (req, res) => {
 // Get all cart items for logged-in user
 export const getCartItems = async (req, res) => {
   try {
-    const userId = req.user.id; // from JWT token
+    const userId = req.user; // from JWT token
+    console.log('userId:', userId);
     const cart = await Cart.findOne({ user: userId }).populate("products.product");
-
+    console.log('cart:', cart);
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -76,7 +78,8 @@ export const getCartItems = async (req, res) => {
 export const updateCartItem = async (req, res) => {
   const { productId } = req.params;
   const { quantity } = req.body;
-  const userId = req.user?.id;
+  console.log(quantity);
+  const userId = req.user;
 
   try {
     const cart = await Cart.findOne({ user: userId });
@@ -117,7 +120,7 @@ export const updateCartItem = async (req, res) => {
 
 // Remove item from cart and recalc total using discount
 export const removeCartItem = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user;
   const { productId } = req.params;
 
   try {

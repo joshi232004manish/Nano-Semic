@@ -48,9 +48,9 @@ const LoginModal = ({isOpen}) => {
       );
       // alert(`welcome Back 🥳, ${response.data.username}`);
       dispatch(setUser({ username: response.data.username, email: response.data.email }));
-       toast.success("Successfully loggin in!");
+      toast.success("Successfully loggin in!");
       // localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      navigate("/account");
       setIsLoginOpen(false);
     } catch (err) {
       setError("Invalid email or password.");
@@ -134,7 +134,7 @@ const LoginModal = ({isOpen}) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-70"
       onClick={() => setIsLoginOpen(false)}
     >
       <div
@@ -144,8 +144,8 @@ const LoginModal = ({isOpen}) => {
         
         <div className="relative hidden md:flex flex-col justify-center items-center bg-dark-blue w-1/2 rounded-l-lg overflow-hidden">
           <img
-            src="nanosemic3.png"
-            alt="Authentication Visual"
+            src="/nanosemic3.png"
+            // alt="Authentication Visual"
             className="w-full max-h-[510px] object-cover rounded-l-lg shadow-lg"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-blue-500/40 via-blue-800/0 to-blue-500/40 rounded-l-lg" />
@@ -308,7 +308,7 @@ const LoginModal = ({isOpen}) => {
                   <OAuth/>
                 </>
               ) : (
-                <VerifyEmail email={email} />
+                <VerifyEmail email={email} password={registerData.password}  username={registerData.username} />
               )}
             </>
           )}

@@ -20,11 +20,9 @@ const AddressUpdate = () => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
         const res = await axios.get('http://localhost:3000/api/my/address', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          withCredentials:true,
         });
         setAddresses(res.data.addresses || []);
       } catch (err) {
@@ -67,16 +65,14 @@ const handleDeliverHere = async () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const token = localStorage.getItem('token');
+    
     const res = await axios.post('http://localhost:3000/api/update/address', form, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+     withCredentials:true
     });
 
     // Save the newly added address to localStorage
     const newAddress = res.data.addresses[res.data.addresses.length - 1]; // Get the last added address
-    localStorage.setItem('selectedAddress', JSON.stringify(newAddress));
+    
 
     setMessage('New address added and selected!');
     setTimeout(() => navigate('/summary'), 1000);

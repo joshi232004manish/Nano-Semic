@@ -2,17 +2,17 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import productRouter from './routes/product.route.js'
-//import uploadRouter from './routes/upload.route.js'
+
 import authRoutes from './routes/auth.route.js'
 import adminRoutes from './routes/admin.route.js';
 import cors from 'cors'
-import { errorHandler } from './utils/error.js'
+
 import orderRouter from './routes/order.route.js'
 import cartRoutes from './routes/cart.routes.js';
-import firebasesaveuser from './routes/firebasesaveuser.route.js'
+import cookieParser from 'cookie-parser';
 import  updateaddress  from './routes/address.route.js'
 import orderRoutes from './routes/order.route.js';
-import Admin from './models/admin.model.js'
+
 import orderRouterAdmin from './routes/adminorder.route.js';
 dotenv.config()
 
@@ -27,7 +27,7 @@ const app = express();
 const port = 3000;
 
 
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
