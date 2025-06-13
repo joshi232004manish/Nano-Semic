@@ -1,4 +1,4 @@
-
+import nodemailer from 'nodemailer'
 
 export const contact = async (req, res) => {
   const { name, email, mobile, message } = req.body;

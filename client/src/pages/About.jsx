@@ -81,9 +81,8 @@ const About = () => {
           <p className="text-lg text-gray-300 leading-relaxed">
             Nano Semic Pvt. Ltd. is one of the brand new members in the discrete
             semiconductor innovation space. We specialize in developing advanced
-            sensing platforms, unique sensing materials, characterization kits,
-            and smart sensor products that leverage cutting-edge semiconductor
-            technology.
+            sensing platforms, unique sensing materials,
+            smart sensor products and providing expert consultancy services in power devices and other semiconductor technologies .
           </p>
         </div>
       </Section>
@@ -126,16 +125,15 @@ const About = () => {
           <div className="order-1 md:order-2">
             <h2 className="text-4xl font-bold mb-6">Mission</h2>
             <p className="text-lg text-gray-300">
-              To make sensor technology accessible, reliable, and affordable for
-              everyone — from innovators building smart homes to engineers
-              powering smart cities.
+              To develop next generation sensing solutions and make sensor technology accessible, reliable, and affordable for
+              everyone. Also play a leading role in enabling advanced semiconductor ecosystem through expert technical  consultancy services.
             </p>
           </div>
         </div>
       </Section>
 
       {/* Innovation Section */}
-      <Section direction="down">
+      {/* <Section direction="down">
         <div className="max-w-6xl mx-auto py-20 px-6 grid md:grid-cols-2 gap-12 items-center max-w-3xl mx-auto py-20 px-6 text-center backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl shadow-lg">
           <div>
             <h2 className="text-4xl font-bold mb-6">We are innovative</h2>
@@ -150,7 +148,7 @@ const About = () => {
             <GradientImage src={miss} alt="Innovation" />
           </div>
         </div>
-      </Section>
+      </Section> */}
 
       {/* Core Team Section */}
       <Section>
@@ -164,14 +162,14 @@ const About = () => {
           {[
             {
               name: "Dr. Sayan Dey",
-              title: "Director",
+              title: "Director/ Co-Founder",
               linkedin: "https://www.linkedin.com/in/sayandey?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
               image: sir2,
               bio: "Dr. Sayan received his B.Tech degree in ECE from WBUT, M.Tech from Jadavpur University and Ph.D. from IIT Kharagpur in 2020. Thereafter, he worked as a Fulbright-Nehru Fellow in Columbia University, USA till 2022. He received National Awards for best dissertations twice in 2015 and 2020 and the prestigious Fulbright Fellowship in 2021. He is currently an Assistant Professor in the Department of Electronics and Communication Engineering, School of Electrical and Computer Sciences at IIT Bhubaneswar and also one of the Directors of Nano Semic Pvt. Ltd.",
             },
             {
               name: "Dr. Akshay K",
-              title: "Director",
+              title: "Director/ Co-Founder",
               linkedin: "https://www.linkedin.com/in/akshay-k-ak-8129066062/?originalSubdomain=in",
               image: akashay,
               bio: "Dr. Akshay received the B.Tech. degree in ECE from NIT Calicut and MS and PhD degrees from IIT Madras as a Prime Minister's Research Fellow in 2022. He worked as a Senior Semiconductor Device Engineer in the Technology Development Group at Micron Technology till 2023. He is currently an Assistant Professor in the Department of Electronics and Communication Engineering, School of Electrical and Computer Sciences at IIT Bhubaneswar and also one of the Directors of Nano Semic Pvt. Ltd. ",

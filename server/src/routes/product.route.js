@@ -13,5 +13,6 @@ router.post("/upload", upload.array("image", 10), uploadImage);
 // router.post('/update/:id',updateListing);
 router.get('/get/:id',getProduct);
 router.get('/get',getProducts);
+router.post('/create',createProduct);
 
 export default  router;

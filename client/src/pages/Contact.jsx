@@ -33,13 +33,13 @@ const Contact = () => {
         email: formData.email,
         mobile: formData.mobile,
         message: formData.message,
-      });
+      },{withCredentials:true});
       await axios.post("http://localhost:3000/api/admin/savecontact", {
         name: formData.name,
         email: formData.email,
         mobile: formData.mobile,
         message: formData.message,
-      });
+      },{withCredentials:true});
 
       
       

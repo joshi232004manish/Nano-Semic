@@ -78,7 +78,7 @@ function Services() {
                 Semiconductor Workforce Training
               </h2>
               <p className="mt-6 text-lg text-gray-600">
-                We offer carefully curated short-term and long-term courses and hands on training for employees, freshers, and students looking for upskilling themselves to be ready for the rapidly evolving semiconductor technology ecosystem.  Further, we offer to conduct technical workshops (for companies), faculty development programs ( for engineering colleges and universities), and summer/winter camps (for schools). Our goal is to bridge industry-academia knowledge through tailored training programs.
+                We offer carefully curated short-term and long-term courses and hands on training for professionals, freshers, and students looking for upskilling themselves to be ready for the rapidly evolving semiconductor technology ecosystem.  Further, we offer to conduct technical workshops (for companies), faculty development programs ( for engineering colleges and universities), and summer/winter camps (for schools). Our goal is to bridge industry-academia knowledge through tailored training programs.
               </p>
               <div className="mt-6">
                 <a

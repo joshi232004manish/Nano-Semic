@@ -121,7 +121,7 @@ const Pro = () => {
               <h3 className="text-lg font-semibold text-gray-800 mb-1">
                 {product.title}
               </h3>
-              <p className="text-sm text-gray-700 mb-2">Rs. {product.price}</p>
+              <p className="text-sm text-gray-700 mb-2">Rs. {(product.price - (product.discount * product.price) / 100).toFixed(2)}</p>
               <p className="text-sm text-gray-600 line-clamp-3">
                 {product.description || "No description available."}
               </p>

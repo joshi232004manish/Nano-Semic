@@ -126,10 +126,10 @@ function Home() {
             >
               <h3 className="text-2xl font-bold mb-4">OUR PRODUCTS</h3>
               <p className="text-gray-200 leading-relaxed">
-                Explore our suite of high-performance semiconductor components,
-                tools, and embedded solutions. Each product is designed with
+                Explore our suite of high-performance smart-sensing solutions and semiconductor components
+                . Each product is designed with
                 precision engineering to ensure performance, energy efficiency,
-                and seamless integration into your workflow.
+                and effortless integration into your systems and applications.
               </p>
             </motion.div>
           </Link>
